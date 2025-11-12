@@ -9,7 +9,8 @@ public class Main {
 
 
         System.out.print("What is your name: ");
-        userData.setName(input.nextLine());
+        String UserName = input.nextLine();
+        userData.setName(UserName);
 
         // result
         System.out.printf("Hello, my dearest %s!",userData.getName());
