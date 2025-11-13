@@ -1,6 +1,6 @@
 package LMS;
 
-public class BookData {
+public class Book {
     private String nameBook;
     private int bookId;
     private boolean isBookAvailable;
