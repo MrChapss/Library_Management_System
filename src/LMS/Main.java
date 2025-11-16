@@ -38,5 +38,10 @@ public class Main {
         //output
         //System.out.println("Hello! " + studentData.getStudentName());
         //System.out.println("Hello! " + studentData.getStudentId());
+        
+        //FUCK THE SCHEDULE BRO
+        //FUCK ALL PEOPLE
+        //FUCK THEM!!!
+        //I WANT TO FUCKING CODE FR
     }
 }

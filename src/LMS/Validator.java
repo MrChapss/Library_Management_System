@@ -6,6 +6,7 @@ public class Validator {
             System.out.println("Please input the correct info!");
             return true;
         } else {
+        	System.out.println("Login success!");
             return false;
         }
     }

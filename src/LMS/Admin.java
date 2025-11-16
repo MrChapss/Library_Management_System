@@ -1,9 +1,6 @@
 package LMS;
 
-public class Admin {
-    protected String name;
-    protected int Id;
-
+public class Admin extends User {
     public void setAdminName(String name){
         this.name = name;
     }

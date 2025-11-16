@@ -1,6 +1,6 @@
 package LMS;
 
-public class Student extends Admin {
+public class Student extends User {
     public void setStudentName(String name){
         this.name = name;
     }
