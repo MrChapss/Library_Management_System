@@ -15,21 +15,12 @@ public class Main {
             // ERROR - nag s-skip na naman sa scanner tuwing nag l-loop (medyo fixed)
             // gagamitan ko ng parse line (if maganda siya gamitin)
             System.out.print("Please enter your id: ");
-            int userID = input.nextInt();
-            input.nextLine();
+            int userID = Integer.parseInt(input.nextLine());
             studentData.setStudentId(userID);
 
             System.out.print("Please enter your name: ");
             String userName = input.nextLine();
             studentData.setStudentName(userName);
-
-            /*
-                Name and ID must be match!
-                Ex. Name: Sigma
-                    ID: 123
-                    Success!
-
-             */
 
         } while(checkAcc.Account(studentData.getStudentName(), studentData.getStudentId()));
 
