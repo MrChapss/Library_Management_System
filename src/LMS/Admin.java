@@ -11,5 +11,7 @@ public class Admin extends User {
 
     public String getAdminName(){return name;}
     public int getAdminId(){return Id;}
+    
+    
 }
 

@@ -11,4 +11,6 @@ public class Student extends User {
 
     public String getStudentName(){return name;}
     public int getStudentId(){return Id;}
+    
+    //public String
 }
