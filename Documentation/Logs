@@ -12,3 +12,10 @@ What I have learn during creating the project:
 11/19/25
 1. I continue to work my project and add small progress
 2. I added switch case to account login
+
+11/20/25
+1. Added a measure when user will input empty spaces or blank inputs in the name
+2. I use polymorphism when checking the account user and id of student/admin (i extract the content of "validator" class
+   then paste it on super class "user" to perform polymorphism to admin and student)
+3. I utilize the super class "user" to make it more flexible to its child class
+   (I only kept the getter in student and admin to let their classes hold the value of input/scanner)
