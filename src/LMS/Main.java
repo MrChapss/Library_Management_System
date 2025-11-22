@@ -52,6 +52,27 @@ public class Main {
         
         
         //another switch para sa menu na
+        switch (userOption) {
+        case 1:
+        	System.out.print("Choose from 1-4: ");
+        	int userMenu = Integer.parseInt(input.nextLine());
+        	switch (userMenu) {
+	        	case 1:
+	        		System.out.println("Sa ere");        	
+	        		break;
+	        	
+	        	case 2:
+	        		System.out.println("the less I know the better");
+	        		break;
+	        		
+	        	case 3:
+	        		System.out.println("it is done");
+	        		break;
+        	}
+        case 2:
+        	System.out.println("watata");
+        	break;
+        }
         
         
         

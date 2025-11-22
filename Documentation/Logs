@@ -19,3 +19,4 @@ What I have learn during creating the project:
    then paste it on super class "user" to perform polymorphism to admin and student)
 3. I utilize the super class "user" to make it more flexible to its child class
    (I only kept the getter in student and admin to let their classes hold the value of input/scanner)
+   
