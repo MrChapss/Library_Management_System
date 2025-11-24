@@ -20,3 +20,9 @@ What I have learn during creating the project:
 3. I utilize the super class "user" to make it more flexible to its child class
    (I only kept the getter in student and admin to let their classes hold the value of input/scanner)
    
+11/23/25
+1. I learn how to use nested switch and how important break is
+
+11/24/25
+1. From now then on I will use switch lambda for stability of the code (prone to error when standard switch)
+2. I can loop it with back option but the code is messy at the moment

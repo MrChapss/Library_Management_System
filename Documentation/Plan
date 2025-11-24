@@ -2,13 +2,13 @@ Library Management System (OOP PROJECT)
 
 FLOW OF THE SYSTEM:
 1. Start with login (switch statement)
->> 1st option is member (fresh account when running the java, but saved when looping and reverse)
->> 2nd option is librarian (pre-saved account already in the code)
+>> 1st option is STUDENT (fresh account when running the java, but saved when looping and reverse)
+>> 2nd option is librarian/ADMIN (pre-saved account already in the code)
 
-2. if MEMBER { (switch statement)
+2. if STUDENT { (switch statement)
     1. Input his/her ID
     2. The system will verify if its true
-    3. The MEMBER will access the main menu for MEMBER only:
+    3. The STUDENT will access the main menu for STUDENT only:
         3.1 Check Books (Books availability)
         3.2 Book mark (adding a book to be read or something like that)
         3.3 Remove a book mark
@@ -16,7 +16,7 @@ FLOW OF THE SYSTEM:
 
 }
 
-2. if LIBRARIAN { (switch statement)
+2. if LIBRARIAN/ADMIN { (switch statement)
     1. Input his/her ID
     2. The system will verify if its true
     3. The LIBRARIAN will access the ADMIN menu which have the following:
