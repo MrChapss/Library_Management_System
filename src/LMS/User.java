@@ -5,6 +5,11 @@ public class User {
     protected int Id;
     protected final int min = 0;
 	protected int max = 3;
+	protected int userChoice;
+	
+	public void userChoice(int userChoice) {
+		this.userChoice = userChoice;
+	}
 
     public void setName(String name){
         this.name = name;
@@ -40,5 +45,23 @@ public class User {
         	System.out.println("Login success!");
         	return false;
         }
+    }
+    
+    public boolean exiting(int userChoice) {
+    	if (userChoice != 4) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    	
+    }
+    
+    public boolean menuChoice(int userChoice) {
+    	while (true) {
+    		switch (userChoice) {
+				case 4 -> System.out.println("Exiting...");
+	    	}
+		    	return false;
+	    	}
     }
 }

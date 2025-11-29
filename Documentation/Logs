@@ -26,3 +26,8 @@ What I have learn during creating the project:
 11/24/25
 1. From now then on I will use switch lambda for stability of the code (prone to error when standard switch)
 2. I can loop it with back option but the code is messy at the moment
+
+11/27/25
+1. Naiisip ko sa book class, gagamit ng arraylist para gumawa ng name of book tapos yung magiging id nya
+	yung index niya mismo (gagamit nalang ng .equalsIgnoreCase para maiwasan yung duplication)
+2. Bug or bold sa 113 at 108 (pwede rin bug sa mismong logic ng book class)

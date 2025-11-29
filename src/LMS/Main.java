@@ -55,20 +55,23 @@ public class Main {
         // like paano ko siya ma loop na para bang may exit kada option (goods na)
         // problema nalang kung paano siya mag exit na maayos itsura ng code
         // lagay ko nalang sa student class yung mga variable na ginamit para ma-access yung menu 
-        case 1:
+        case 1 -> {
         	do {
         		System.out.printf("%nWelcome to S-Library%n");
             	System.out.println("1. Check Books");
-            	System.out.println("2. Book mark");
-            	System.out.println("3. Remove a book mark");
+            	System.out.println("2. Book mark"); // Barrow a book
+            	System.out.println("3. Remove a book mark"); //return a book
             	System.out.println("4. Exit");
             	System.out.print("Choose from 1-4: ");
             	int studentMenu = Integer.parseInt(input.nextLine());
             	switch (studentMenu) {
     	        	case 1 -> {
     	        		while (true) {
+    	        			// call the method of check books in student class
     	        			System.out.println("Sa ere");
     		        		System.out.print("Input 'back' to go menu: ");
+    		        		
+    		        		// then it proceeds here for input/output
     		        		String backOption = input.nextLine();
     		        		
     		        		if (backOption.equals("back")) {
@@ -87,27 +90,25 @@ public class Main {
     	        		
             		}
         	} while (true);
-        	
-        	
-        case 2:
-        	System.out.println("watata");
-        	int adminMenu = Integer.parseInt(input.nextLine());
-        	switch (adminMenu) {
-	        	case 1:
-	        		System.out.println("wada");        	
-	        		break;
-	        	
-	        	case 2:
-	        		System.out.println("sigma");
-	        		break;
-	        		
-	        	case 3:
-	        		System.out.println("yatta");
-	        		break;
-        		}
-        	break;
-        	
         }
+        	
+        	
+        	
+        case 2 -> {
+        		System.out.printf("%nWelcome Admin to S-Library%n");
+            	System.out.println("1. Add Books");
+            	System.out.println("2. Remove Books"); 
+            	System.out.println("3. Check Books"); //return a book
+            	System.out.println("4. Exit");
+            	System.out.print("Choose from 1-4: ");
+            	int studentMenu = Integer.parseInt(input.nextLine());
+            	
+            	adminData.menuChoice(studentMenu);
+            	
+		    
+			}
+		}
+        	
         
         
         
