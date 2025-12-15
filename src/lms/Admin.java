@@ -1,4 +1,4 @@
-package LMS;
+package lms;
 
 public class Admin extends User {
 

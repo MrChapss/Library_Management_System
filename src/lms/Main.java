@@ -1,4 +1,4 @@
-package LMS;
+package lms;
 import java.util.Scanner;
 
 public class Main {
@@ -9,15 +9,12 @@ public class Main {
         Student studentData = new Student();
         Book bookData = new Book();
         
-        //input
         System.out.println("Choose an account to login (1-2): ");
         System.out.println("1. Student");
         System.out.println("2. Admin");
         System.out.printf("%nYour input: ");
-        //basta switch case to para choose kung user lang or admin ba
         int userOption = Integer.parseInt(input.nextLine());
         
-        // may switch narin sa wakas
         switch (userOption) {
         //FOR STUDENT
         case 1 -> {
@@ -109,38 +106,5 @@ public class Main {
 			}
 		}
         	
-        
-        
-        
-        
-        // logic for checking account
-        /*
-        do {
-            System.out.print("Please enter your id: ");
-            int userID = Integer.parseInt(input.nextLine());
-            studentData.setStudentId(userID);
-
-            System.out.print("Please enter your name: ");
-            String userName = input.nextLine();
-            studentData.setStudentName(userName);
-
-        } while(checkAcc.Account(studentData.getStudentName(), studentData.getStudentId()));
-        */
-        
-        // testing ground
-        /*
-        System.out.print("Enter name student: ");
-        String userName = input.nextLine();
-        studentData.setName(userName);
-        
-        System.out.print("Enter name student: ");
-        String userName2 = input.nextLine();
-        adminData.setName(userName2);
-        */
-        
-        //output
-        //System.out.println("Hello! " + studentData.getName());
-        //System.out.println("Hello! " + adminData.getName());
-        
     }
 }

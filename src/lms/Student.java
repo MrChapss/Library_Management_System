@@ -1,4 +1,4 @@
-package LMS;
+package lms;
 
 public class Student extends User {
 	//lagay ko na dto yung mga ginamit sa main like mga variable para gumana yung switch and etc.

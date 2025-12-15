@@ -1,4 +1,4 @@
-package LMS;
+package lms;
 
 public class User {
 	protected String name;
