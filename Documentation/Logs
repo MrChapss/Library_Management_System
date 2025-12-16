@@ -48,3 +48,4 @@ What I have learn during creating the project:
 1. Gagawa ako ng max retries sa login para standard (done)
 2. lalagyan ko siya ng try catch para less sa error (done)
 3. Added how many left retries they can log in if wrong inputs (done)
+4. Nag merge ako ng branch, maangas siya at slightly gets lang
