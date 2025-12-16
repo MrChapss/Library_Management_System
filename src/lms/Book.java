@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package lms;
 import java.util.ArrayList;
 
@@ -60,3 +61,6 @@ public class Book {
     //id of the book (check kung meron existing id)
     //yung sa availability parang check balance tulad sa bank simulator sim
 }
+=======
+package lms;
+>>>>>>> properBai

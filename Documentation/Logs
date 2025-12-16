@@ -31,3 +31,20 @@ What I have learn during creating the project:
 1. Naiisip ko sa book class, gagamit ng arraylist para gumawa ng name of book tapos yung magiging id nya
 	yung index niya mismo (gagamit nalang ng .equalsIgnoreCase para maiwasan yung duplication)
 2. Bug or bold sa 113 at 108 (pwede rin bug sa mismong logic ng book class)
+
+11/30/25
+1. I gotta lock in blud, tangina mo sayang araw natin
+2. Be better everyday
+
+11/30/25 (3:55pm)
+1. fresh start again and again to better
+
+12/15/25 (3:57pm)
+1. fresh start tapos nag ask kay AI how to improve my code
+2. Kinopya at inaaral ko yung code ni ChatGPT kung paano nag work yung login nya para magawa ko rin
+3. Mag add ako ng max retries sa login without use of chatgpt para maintindihan ko
+
+12/16/25 (3:43pm)
+1. Gagawa ako ng max retries sa login para standard (done)
+2. lalagyan ko siya ng try catch para less sa error (done)
+3. Added how many left retries they can log in if wrong inputs (done)
