@@ -49,3 +49,9 @@ What I have learn during creating the project:
 2. lalagyan ko siya ng try catch para less sa error (done)
 3. Added how many left retries they can log in if wrong inputs (done)
 4. Nag merge ako ng branch, maangas siya at slightly gets lang
+
+12/17/25 (1:59pm)
+1. Encounter a bug where count of retries are showing even correct input details (bug solved)
+2. Same case when the max limit of retries reached (solved)
+3. I try catch the line 18 so it won't crash the program
+4. Added how the menu work and inputs

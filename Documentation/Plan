@@ -10,8 +10,8 @@ FLOW OF THE SYSTEM:
     2. The system will verify if its true
     3. The STUDENT will access the main menu for STUDENT only:
         3.1 Check Books (Books availability)
-        3.2 Book mark (adding a book to be read or something like that)
-        3.3 Remove a book mark
+        3.2 Barrow a book
+        3.3 Return the book
         3.4 Exit (exiting the application)
 
 }
@@ -20,11 +20,10 @@ FLOW OF THE SYSTEM:
     1. Input his/her ID
     2. The system will verify if its true
     3. The LIBRARIAN will access the ADMIN menu which have the following:
-        3.1 Check User (How many user and name?)
-        3.2 Check Books (Books availability)
-        3.3 Add Book
-        3.4 Remove Book
-        3.5 Exit
+        3.1 Check Books (Books availability) + total of books
+        3.2 Add Book
+        3.3 Remove Book
+        3.4 Exit
 }
 
 Structure of Code:
