@@ -4,10 +4,10 @@ import java.util.Scanner;
 public class Main {
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
-		Login login = new Login();
+		Login user = new Login();
 		Student studentAccountData = new Student ();
 		Admin adminAccountData = new Admin();
-		Menu mainMenu = new Menu();
+		Menu home = new Menu();
 		
 		System.out.printf("Welcome to LMS!%n%n");
 		System.out.println("Please choose an account:");
@@ -21,13 +21,13 @@ public class Main {
 			switch(choosingAccount) {
 			// call the method for student login and menu
 			case 1 -> {
-				login.isLogginIn(input, studentAccountData);
-				mainMenu.Skibidi(input, studentAccountData);
+				user.isLogginIn(input, studentAccountData);
+				home.menu(input, studentAccountData);
 			} 
 			// call the method for admin login and menu
 			case 2 -> {
-				login.isLogginIn(input, adminAccountData);
-				mainMenu.Skibidi(input, adminAccountData);
+				user.isLogginIn(input, adminAccountData);
+				home.menu(input, adminAccountData);
 			} 
 			// stop the program when exiting
 			case 3 -> System.out.printf("%nExiting..."); 

@@ -14,9 +14,9 @@ class Admin extends User {
 	public void Message() {
 		System.out.printf("%nWelcome to main menu of LMS!%n%n");
 		System.out.println("Please choose an action from below:");
-		System.out.println("1 to check available books");
-		System.out.println("2 to add a book");
-		System.out.println("3 to remove a book");
+		System.out.println("1 to add a book");
+		System.out.println("2 to remove a book");
+		System.out.println("3 to check available books");
 		System.out.println("4 to exit program");
 		
 	}

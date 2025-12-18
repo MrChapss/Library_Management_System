@@ -1,4 +1,4 @@
-What I have learn during creating the project:
+What I have learn/done during creating the project:
 
 1. I learn to seperate the input and output from classes
 2. Learning how to use the try catch
@@ -54,4 +54,17 @@ What I have learn during creating the project:
 1. Encounter a bug where count of retries are showing even correct input details (bug solved)
 2. Same case when the max limit of retries reached (solved)
 3. I try catch the line 18 so it won't crash the program
-4. Added how the menu work and inputs
+4. Added a comment on how the menu work and inputs
+
+12/17/25 (11:37pm)
+1. I create add function to menu but still messy code (it must be switch statement to make it clean)
+2. the code inside of Book class is experiment
+
+12/18/25 (2:43pm)
+1. I encounter the problem on how do I make it CRUD if different switch statement for admin and student
+2. How do I make a back button after they finished doing that function (adding book or removing)
+3. MAIN PROBLEM: paano ko siya ma-loop yung menu until sinabi ininput ni user
+
+12/18/25 (9:02pm)
+1. I solved the main problem today but I lack ideas how to properly stop it (the program itself)
+2. the code I wrote today might be redundant but it works intended and more bugs haha
