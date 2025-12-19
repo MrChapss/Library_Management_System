@@ -68,3 +68,20 @@ What I have learn/done during creating the project:
 12/18/25 (9:02pm)
 1. I solved the main problem today but I lack ideas how to properly stop it (the program itself)
 2. the code I wrote today might be redundant but it works intended and more bugs haha
+
+12/19/25 (3:53pm)
+1. I'm fixing the menu infinite loop
+2. There's a new bug on login where:
+	2.1 If user input 123M on id then put its username it success login (scary bug)
+	PROPOSE SOLUTION: change the id to password (done)
+
+NEW BUGS - 12/19/25 (4:09pm)
+1. Dapat may condition yung login na mag end agad yung program if max retries na si user
+
+FIXED BUGS - 12/19/25 (5:29pm)
+1. the menu infinite loop
+2. the user will not proceed to menu if login maximum retires reached
+
+GOALS - 12/19/25 (5:31pm)
+1. Understand the code and apply DRY method (TOP PRIORITY)
+2. Implement database

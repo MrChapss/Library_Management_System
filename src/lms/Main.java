@@ -21,13 +21,18 @@ public class Main {
 			switch(choosingAccount) {
 			// call the method for student login and menu
 			case 1 -> {
-				user.isLogginIn(input, studentAccountData);
-				home.menu(input, studentAccountData);
+				if (user.isLogginIn(input, studentAccountData) == true) {
+					home.menu(input, studentAccountData);
+				} else {
+					break;
+				}
 			} 
 			// call the method for admin login and menu
 			case 2 -> {
-				user.isLogginIn(input, adminAccountData);
-				home.menu(input, adminAccountData);
+				if (user.isLogginIn(input, adminAccountData) == true) {
+					home.menu(input, adminAccountData);
+				}
+				
 			} 
 			// stop the program when exiting
 			case 3 -> System.out.printf("%nExiting..."); 

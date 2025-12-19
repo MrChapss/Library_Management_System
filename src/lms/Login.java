@@ -5,29 +5,31 @@ class Login {
 	private int maxRetries = 3;
 	private int minRetries = 0;
 	
-	public void isLogginIn(Scanner input, User data) {
+	public boolean isLogginIn(Scanner input, User data) {
 	    do {
 	    	try {
-	    		System.out.printf("%nPlease enter your id: ");
-		        int userID = Integer.parseInt(input.nextLine());
-		        data.setId(userID);
+		        System.out.printf("%nPlease enter your Username: ");
+		        String userName = input.nextLine();
+		        data.setUserName(userName);
+		        
+		        System.out.printf("%nPlease enter your Password: ");
+		        String userPassWord = input.nextLine();
+		        data.setPassWord(userPassWord);
 	    	} catch (Exception e) {
 	    		System.out.println("Input your ID only!");
 	    	}
-	        System.out.print("Please enter your username: ");
-	        String userName = input.nextLine();
-	        data.setUserName(userName);
+	        
 	        
 	        maxRetries--;
 	        // check the account details if true then stop the loop
-	        if (!data.isAccountValid(data.getUserName(), data.getId())) {
-	        	System.out.println("Successfully login!"); break;
+	        if (!data.isAccountValid(data.getUserName(), data.getPassWord())) {
+	        	System.out.println("Successfully login!"); return true;
 	        // tell the user how many retries left
 	        } if (maxRetries > minRetries) {
 	        	System.out.printf("You have %d retries left!%n",maxRetries);
 	        // stop the program when user hit the maximum retries
 	        } if (maxRetries == minRetries) {
-	        	System.out.println("Try again later!"); break;
+	        	System.out.println("Try again later!"); return false;
 	        }
 	    } while (true);
 	}

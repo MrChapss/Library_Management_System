@@ -17,7 +17,6 @@ class Book {
 			}
 		}
 	}
-	// I'll finish this once I'm done doing the "add book" function
 	public void isBookAvailable(Scanner input) {
 		for (int i=0; i<books.size(); i++) {
 			System.out.println(books.get(i));
