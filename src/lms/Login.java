@@ -1,24 +1,19 @@
 package lms;
 import java.util.Scanner;
-
+// login class is for login methods only
 class Login {
 	private int maxRetries = 3;
 	private int minRetries = 0;
-	
-	public boolean isLogginIn(Scanner input, User data) {
+	// I put the all login on this function adding input and object as a parameter
+	public boolean isLoggingIn(Scanner input, User data) {
 	    do {
-	    	try {
-		        System.out.printf("%nPlease enter your Username: ");
-		        String userName = input.nextLine();
-		        data.setUserName(userName);
-		        
-		        System.out.printf("%nPlease enter your Password: ");
-		        String userPassWord = input.nextLine();
-		        data.setPassWord(userPassWord);
-	    	} catch (Exception e) {
-	    		System.out.println("Input your ID only!");
-	    	}
+	        System.out.printf("%nPlease enter your Username: ");
+	        String userName = input.nextLine();
+	        data.setUserName(userName);
 	        
+	        System.out.printf("%nPlease enter your Password: ");
+	        String userPassWord = input.nextLine();
+	        data.setPassWord(userPassWord);
 	        
 	        maxRetries--;
 	        // check the account details if true then stop the loop

@@ -2,16 +2,16 @@ package lms;
 import java.util.Scanner;
 
 public class Menu {
-	Book books = new Book();
+	bookService books = new bookService();
 	
 	public void menu(Scanner input, User data) {
 		while(true) {
-			data.Message();
+			data.menuInstruction();
 			System.out.printf("%nInput here: ");
 			int userInput = Integer.parseInt(input.nextLine());
 			
 			if (userInput == 4) {
-				System.out.println("Exiting...");
+				System.out.printf("%nExiting...");
 				break;
 			}
 			switch (userInput) {
@@ -19,6 +19,7 @@ public class Menu {
 				case 2 -> books.deletingBook(input);
 				case 3 -> books.isBookAvailable(input);
 			}
-		} 
+		}
 	}
+	// naiisip ko gumawa ng isa pang method kasi different dpat yung function e
 }

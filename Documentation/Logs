@@ -85,3 +85,16 @@ FIXED BUGS - 12/19/25 (5:29pm)
 GOALS - 12/19/25 (5:31pm)
 1. Understand the code and apply DRY method (TOP PRIORITY)
 2. Implement database
+
+12/20/25 (2:56pm)
+1. I added comments throughout project or proper documentation
+2. Understanding the suggested improvements
+3. Added precaution if admin input nothing or spaces when adding book
+4. Not productive today (puro plano lang kung ano next gagawin)
+
+GOALS - 12/20/25(3:19pm)
+1. add database
+2. use hashmap
+3. use enums 
+4. Change the method or polymorph the menu into right function
+ like student returning a book not just adding a new book

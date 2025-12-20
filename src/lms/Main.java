@@ -5,23 +5,26 @@ public class Main {
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 		Login user = new Login();
-		Student studentAccountData = new Student ();
-		Admin adminAccountData = new Admin();
+		User studentAccountData = new Student ();
+		User adminAccountData = new Admin();
 		Menu home = new Menu();
-		
+		// introduction message of the program
 		System.out.printf("Welcome to LMS!%n%n");
 		System.out.println("Please choose an account:");
 		System.out.println("1 for Student");
 		System.out.println("2 for Admin");
 		System.out.println("3 for Exit");
 		System.out.printf("%nInput here: ");
+		// I put try-catch here is user input anything but integer num from 1-3
 		try {
-			int choosingAccount = Integer.parseInt(input.nextLine());
-			
-			switch(choosingAccount) {
+			// I use integer parseInt here so it will not skip
+			int selectedAccount = Integer.parseInt(input.nextLine());
+			// using switch to select an account
+			switch(selectedAccount) {
 			// call the method for student login and menu
 			case 1 -> {
-				if (user.isLogginIn(input, studentAccountData) == true) {
+				// I use the input "Scanner" and objectAccount to make it work
+				if (user.isLoggingIn(input, studentAccountData) == true) {
 					home.menu(input, studentAccountData);
 				} else {
 					break;
@@ -29,10 +32,9 @@ public class Main {
 			} 
 			// call the method for admin login and menu
 			case 2 -> {
-				if (user.isLogginIn(input, adminAccountData) == true) {
+				if (user.isLoggingIn(input, adminAccountData) == true) {
 					home.menu(input, adminAccountData);
 				}
-				
 			} 
 			// stop the program when exiting
 			case 3 -> System.out.printf("%nExiting..."); 
@@ -40,5 +42,6 @@ public class Main {
 		} catch (Exception e) {
 			System.out.println("Read the directions properly!");
 		}
+		input.close();
 	}
 }

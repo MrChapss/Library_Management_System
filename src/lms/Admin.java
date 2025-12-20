@@ -11,7 +11,7 @@ class Admin extends User {
 	}
 	
 	@Override
-	public void Message() {
+	public void menuInstruction() {
 		System.out.printf("%nWelcome to main menu of LMS!%n%n");
 		System.out.println("Please choose an action from below:");
 		System.out.println("1 to add a book");
