@@ -11,7 +11,7 @@ class Login {
 	        String userName = input.nextLine();
 	        data.setUserName(userName);
 	        
-	        System.out.printf("%nPlease enter your Password: ");
+	        System.out.print("Please enter your Password: ");
 	        String userPassWord = input.nextLine();
 	        data.setPassWord(userPassWord);
 	        

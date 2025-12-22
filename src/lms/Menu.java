@@ -11,7 +11,7 @@ public class Menu {
 			int userInput = Integer.parseInt(input.nextLine());
 			
 			if (userInput == 4) {
-				System.out.printf("%nExiting...");
+				System.out.printf("%nExiting...%n%n");
 				break;
 			}
 			switch (userInput) {
@@ -21,5 +21,4 @@ public class Menu {
 			}
 		}
 	}
-	// naiisip ko gumawa ng isa pang method kasi different dpat yung function e
 }

@@ -98,3 +98,8 @@ GOALS - 12/20/25(3:19pm)
 3. use enums 
 4. Change the method or polymorph the menu into right function
  like student returning a book not just adding a new book
+ 
+12/22/25 (3:32pm)
+1. Added a precaution if user add a book similar name it will throw a "the book is already added!" 
+2. Added a precaution if user delete a book even its not existing, it will throw "the book does not exist"
+3. Added a feedback if user successfully deleted or added a book.
