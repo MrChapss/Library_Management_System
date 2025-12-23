@@ -103,3 +103,6 @@ GOALS - 12/20/25(3:19pm)
 1. Added a precaution if user add a book similar name it will throw a "the book is already added!" 
 2. Added a precaution if user delete a book even its not existing, it will throw "the book does not exist"
 3. Added a feedback if user successfully deleted or added a book.
+
+12/23/25 (11:15pm)
+1. I'm gonna add database and connect it on LMS java project in eclipse
