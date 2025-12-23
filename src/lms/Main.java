@@ -1,5 +1,6 @@
 package lms;
 import java.util.Scanner;
+import java.sql.Connection;
 
 public class Main {
 	public static void main(String[] args) {
@@ -8,6 +9,9 @@ public class Main {
 		User studentAccountData = new Student ();
 		User adminAccountData = new Admin();
 		Menu home = new Menu();
+		
+		Connection con = DBconnection.getConnection();
+		if (con!=null) System.out.println("connected ang liga!");
 		
 		first:
 		while (true) {
