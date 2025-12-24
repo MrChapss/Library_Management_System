@@ -11,7 +11,6 @@ public class Main {
 		Menu home = new Menu();
 		
 		Connection con = DBconnection.getConnection();
-		if (con!=null) System.out.println("connected ang liga!");
 		
 		first:
 		while (true) {
