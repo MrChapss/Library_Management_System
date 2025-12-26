@@ -118,3 +118,11 @@ GOALS - 12/20/25(3:19pm)
 1. I learn how to create table using the sql on myphpadmin
 2. I must memorize the pattern of the url so it won't prone to error (wrong spelling led to error)
 3. I will practice more and implement what I learned in my LMS project
+
+12/26/25 (11:46pm)
+1. I forgot to write this earlier since I was focus creating dao method for LMS
+2. I integrated some of my testing or learnings to my project especially to login and sign up
+3. I use and download the BCrypt to hash the password to protect it
+4. I also used PrepapredStatement for anti sql injection
+5. I also learned how to the system will check the hashed password if its the password of the user
+6. I will aim to improve and discover rather than perfection (you can keep messy codes for now but change it later)

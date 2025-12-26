@@ -6,21 +6,17 @@ public class Main {
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 		Login user = new Login();
-		User studentAccountData = new Student ();
-		User adminAccountData = new Admin();
 		Menu home = new Menu();
-		
-		Connection con = DBconnection.getConnection();
 		
 		first:
 		while (true) {
 			// introduction message of the program
 			System.out.printf("Welcome to LMS!%n%n");
-			System.out.println("Please choose an account:");
-			System.out.println("1 for Student");
-			System.out.println("2 for Admin");
+			System.out.println("Choose an action from 1-3:");
+			System.out.println("1 for Login");
+			System.out.println("2 for Sign up");
 			System.out.println("3 for Exit");
-			System.out.printf("Input here: ");
+			System.out.printf("%nInput here: ");
 			// I put try-catch here is user input anything but integer num from 1-3
 			try {
 				// I use integer parseInt here so it will not skip
@@ -30,19 +26,11 @@ public class Main {
 				// call the method for student login and menu
 				case 1 -> {
 					// I use the input "Scanner" and objectAccount to make it work
-					if (user.isLoggingIn(input, studentAccountData) == true) {
-						home.menu(input, studentAccountData);
-					} else {
-						break first;
-					}
+					user.logIn(input);
 				} 
 				// call the method for admin login and menu
 				case 2 -> {
-					if (user.isLoggingIn(input, adminAccountData) == true) {
-						home.menu(input, adminAccountData);
-					} else {
-						break first;
-					}
+					user.signUp(input);
 				} 
 				// stop the program when exiting using the break label
 				case 3 -> {
