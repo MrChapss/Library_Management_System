@@ -126,3 +126,14 @@ GOALS - 12/20/25(3:19pm)
 4. I also used PrepapredStatement for anti sql injection
 5. I also learned how to the system will check the hashed password if its the password of the user
 6. I will aim to improve and discover rather than perfection (you can keep messy codes for now but change it later)
+
+01/01/26 (4:44pm)
+1. NEW BUG - where user can create account with username but no password or no username no password but created
+2. NEW BUG - the exception words are showing in the error that can be used lack of security
+ 			 (it must show only the words or anything but execption error)
+3. I fixed the bug where empty input can register by adding if statement then return false it if empty input
+4. I asked chatgpt how to fix the error in catch exception handling and it was fixed afterward
+5. I used the try-with-resources to close the resources similar to switch expression to reduce boilerplate
+6. NEW BUG - If user type only existing username then input empty password it the system will tell hint to attacker 
+			 such as "username or password cannot be empty + account is already exist" at the same time.
+

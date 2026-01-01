@@ -13,17 +13,16 @@ class Login {
 	        System.out.print("Please enter your Password: ");
 	        String password = input.nextLine();
 	        
-	        if (attempts==maxRetries) {
-	        	System.out.println("You have reached the maximum retries! Try again later.");
-	        	return false;
-	        } if (dao.isAccountValid(userName, password)) {
+	        if (dao.isAccountValid(userName, password)) {
 	        	System.out.println("Login successfully!");
 	        	return true;
+	        }  if (attempts==maxRetries) {
+	        	System.out.println("You have reached the maximum retries! Try again later.");
+	        	return false;
 	        } else {
 	        	System.out.println("Username or password is incorrect!");
-	        } 
+	        }
 	    }
-	    input.close();
 	    return false;
 	}
 	public boolean signUp(Scanner input) {
@@ -34,14 +33,17 @@ class Login {
 			System.out.print("Please enter your password: ");
 			String password = input.nextLine();
 			
+			if(userName.isBlank() || password.isBlank()) {
+				System.out.println("Username or password cannot be empty!");
+			}
+			if (dao.isUsernameExist(userName)) {
+				System.out.println("Account is already made!");
+			}
 			if (dao.addAccount(userName, password)) {
 				System.out.println("Created account successfully!");
 				return true;
-			} else {
-				System.out.println("Account is already made!");
-			}
+			} 
 		}
-		input.close();
 		return false;
 	}
 
