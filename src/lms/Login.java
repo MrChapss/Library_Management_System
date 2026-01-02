@@ -35,9 +35,10 @@ class Login {
 			
 			if(userName.isBlank() || password.isBlank()) {
 				System.out.println("Username or password cannot be empty!");
+				continue;
 			}
 			if (dao.isUsernameExist(userName)) {
-				System.out.println("Account is already made!");
+				System.out.println("An account with this username already exists!");
 			}
 			if (dao.addAccount(userName, password)) {
 				System.out.println("Created account successfully!");

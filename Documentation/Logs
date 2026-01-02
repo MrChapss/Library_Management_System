@@ -137,3 +137,15 @@ GOALS - 12/20/25(3:19pm)
 6. NEW BUG - If user type only existing username then input empty password it the system will tell hint to attacker 
 			 such as "username or password cannot be empty + account is already exist" at the same time.
 
+01/02/26 (12:11pm)
+1. I fixed the #6 BUG yesterday by using continue statement which used for skipping values
+
+01/02/26 (8:39pm)
+2. I will learn the basics of spring boot on another project
+   (Maybe I will push it on github)
+
+   
+01/02/26 (10:15pm)
+3. I launch the spring boot or should say I run the spring to my eclipse IDE and knowing how it works on browser
+4. From I what learned today, spring boot helps us reduce the boilerplate and today I use the spring web to see the connection of java to web
+   
