@@ -155,6 +155,9 @@ GOALS - 12/20/25(3:19pm)
 3. I experiment changing the url based on user interaction 
 4. I learn to add and use parameter such as name in URL
 
+01/04/26 (11:01pm)
+1. I learn how to use the @PathVariable to make dynamic path using the URL
+
 
 
 
