@@ -158,6 +158,11 @@ GOALS - 12/20/25(3:19pm)
 01/04/26 (11:01pm)
 1. I learn how to use the @PathVariable to make dynamic path using the URL
 
+01/05/26 (11:22pm)
+1. I learn what's the difference of path parameter(@PathVariable) vs query parameter(@RequestParam)
+2. The key difference between them are path parameter is about who/what exactly,
+   while query parameter is about who/what but under condition
+
 
 
 
