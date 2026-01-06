@@ -162,6 +162,17 @@ GOALS - 12/20/25(3:19pm)
 1. I learn what's the difference of path parameter(@PathVariable) vs query parameter(@RequestParam)
 2. The key difference between them are path parameter is about who/what exactly,
    while query parameter is about who/what but under condition
+   
+01/06/26 (2:20pm)
+1. I learn how to return a json data (object to json) but cannot explain how it works (working on it)
+
+NEEDS TO BE UNDERSTAND (AGAIN):
+1. @RestController
+2. @GetMapping (fetching data)
+3. @PathVariable
+4. JSON
+5. @RequestParam
+6. @PostMapping (sending data)
 
 
 
