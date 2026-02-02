@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import lms.dao.Account_Service;
-import lms.service.Account;
+import lms.model.Account;
 
 @RestController
 @RequestMapping("/LMS/account")
@@ -27,7 +27,7 @@ public class Account_Controller {
 		return "Created account!";
 	}
 	
-	@DeleteMapping("/deleting")
+	@DeleteMapping("/delete")
 	public String deleteAccount(@RequestBody Account user) {
 		dao.deleteAccount(user.getUsername());
 		return "Deleted account!";

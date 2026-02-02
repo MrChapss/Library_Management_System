@@ -1,8 +1,8 @@
-package lms.service;
+package lms.model;
 
-import org.springframework.stereotype.Service;
+import jakarta.persistence.Entity;
 
-@Service
+@Entity
 public class Account {
 	private int id;
 	private String username;
