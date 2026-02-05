@@ -1,7 +1,6 @@
 package lms.model;
 
 import jakarta.persistence.Entity;
-
 @Entity
 public class Book {
 	private String name;
