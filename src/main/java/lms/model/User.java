@@ -18,11 +18,12 @@ public class User {
 	
 	@Column(nullable = false)
 	private String username;
-	
 	@Column(nullable = false)
 	private String password;
-	
-	
+	//Automatic false siguro muna 'to para si 1st Admin na mag bibigay ng access kay other or next admins
+	@Column(nullable = false)
+	private boolean isAdmin = false;
+
 	public void setId(int id) {this.id=id;}
 	public int getId() {return id;}
 	
@@ -31,5 +32,8 @@ public class User {
 	 
 	public void setPassword(String password) {this.password=password;}
 	public String getPassword() {return password;}
+	
+	public void setIsAdmin(boolean isAdmin) {this.isAdmin=isAdmin;}
+	public boolean getIsAdmin() {return isAdmin;}
 	
 }

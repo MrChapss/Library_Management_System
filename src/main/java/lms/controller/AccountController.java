@@ -25,14 +25,13 @@ public class AccountController {
 	
 	@PostMapping
 	public String createAccount(@Valid @RequestBody CreateAccountRequest user) {
-		accountService.createAccount(user.getUsername(), user.getPassword());
-		return "Created account";
+		return accountService.createAccount(user.getUsername(), user.getPassword());
 	}
 	
 	@DeleteMapping
 	public String deleteAccount(@RequestBody CreateAccountRequest user) {
 		accountService.deleteAccount(user.getUsername(), user.getPassword());
-		return "Deleted account";
+		return "The account with the username '" + user.getUsername() + "'"+ " has been deleted";
 	}
 	
 	@PutMapping
