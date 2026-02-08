@@ -18,26 +18,19 @@ import lms.service.AccountService;
 @RestController
 @RequestMapping("/LMS/account")
 public class AccountController {
-	
-	
 	@Autowired
 	private AccountService accountService;
-	
 	@PostMapping
 	public String createAccount(@Valid @RequestBody CreateAccountRequest user) {
 		return accountService.createAccount(user.getUsername(), user.getPassword());
 	}
-	
 	@DeleteMapping
 	public String deleteAccount(@RequestBody CreateAccountRequest user) {
-		accountService.deleteAccount(user.getUsername(), user.getPassword());
-		return "The account with the username '" + user.getUsername() + "'"+ " has been deleted";
+		return accountService.deleteAccount(user.getUsername(), user.getPassword());
 	}
-	
 	@PutMapping
 	public String updateAccount(@RequestBody CreateAccountRequest user) {
-		accountService.udpateAccount(user.getId(), user.getUsername(), user.getPassword());
-		return "Updated account";
+		return accountService.udpateAccount(user.getId(), user.getUsername(), user.getPassword());
 	}
 	
 }

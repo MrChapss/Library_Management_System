@@ -18,28 +18,30 @@ public class User {
 	
 	//Automatic false siguro muna 'to para si 1st Admin na mag bibigay ng access kay other or next admins
 	@Column(nullable = false)
-	private boolean isAdmin = false;
+	private String username;
 	@Column(nullable = false)
 	private String password;
 	@Column(nullable = false)
-	private String username;
+	private boolean isAdmin = false;
 	
-	
-
+	// setter
 	public void setId(int id) {this.id=id;}
-	public int getId() {return id;}
-	
+	public void setUsername(String username) {this.username=username;}
+	public void setPassword(String password) {this.password=password;}
 	public void setIsAdmin(boolean isAdmin) {this.isAdmin=isAdmin;}
+	// getter
+	public int getId() {return id;}
+	public String getUsername() {return username;}
+	public String getPassword() {return password;}
 	public boolean getIsAdmin() {return isAdmin;}
 	
-	public void setPassword(String password) {this.password=password;}
-	public String getPassword() {return password;}
-	
-	public void setUsername(String username) {this.username=username;}
-	public String getUsername() {return username;}
-	 
-	
-	
-	
-	
+	public boolean blankInputs(String username, String password) {
+		if (username.isBlank() || username.equals(null)) {
+			return false;
+		} if (password.isBlank() || password.equals(null)) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }
