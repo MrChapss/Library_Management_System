@@ -26,11 +26,11 @@ public class AccountController {
 	}
 	@DeleteMapping
 	public String deleteAccount(@RequestBody CreateAccountRequest user) {
-		return accountService.deleteAccount(user.getUsername(), user.getPassword());
+		return accountService.deleteAccount(user.getUsername());
 	}
 	@PutMapping
 	public String updateAccount(@RequestBody CreateAccountRequest user) {
-		return accountService.udpateAccount(user.getId(), user.getUsername(), user.getPassword());
+		return accountService.updateAccount(user.getId(), user.getUsername(), user.getPassword());
 	}
-	
+	// HINDI DAW DPAT STRING YUNG RETURN NG METHOD SA CONTROLLER
 }
