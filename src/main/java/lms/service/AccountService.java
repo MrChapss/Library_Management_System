@@ -17,27 +17,31 @@ public class AccountService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	// create account method with if-else to prevent empty inputs or duplicate username in database
-	public String createAccount(String username, String password) {
-		User user = new User();
-		user.setUsername("nigga123");
-		user.setPassword("wowthatsnigga");
-		passwordEncoder.encode(user.getPassword());
+	
+	public User createAccount(String username, String password) {
+		User user = User.builder();
+				.username(username)
+				.password(password)
+				.build();
 		accountRepository.save(user);
-		return "test";
-		/*
-			if (user.blankInputs(username, password)) {
-				return "Username or password is invalid";
-			} if (isUsernameExist(username)) {
-				return "The username already exist";
-			} else {
-				user.setUsername(username);
-				passwordEncoder.encode(user.getPassword());
-				accountRepository.save(user);
-				return "Welcome to LMS, " + username + "!";
-			}
-		*/
 	}
+	
+	
+	// create account method with if-else to prevent empty inputs or duplicate username in database
+//	public User createAccount(String username, String password) {
+//		User user = new User();
+//			if (user.blankInputs(username, password)) {
+//				return user;
+//			} if (isUsernameExist(username)) {
+//				return user;
+//			} else {
+//				user.setUsername(username);
+//				user.setPassword(passwordEncoder.encode(password));
+//				return accountRepository.save(user);
+//			}
+//	}
+	
+	
 	@Transactional
 	// delete account method using the repository class with @Transactional (required)
 	

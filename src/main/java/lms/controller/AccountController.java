@@ -3,6 +3,7 @@ package lms.controller;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.http.ResponseEntity;
 
 import jakarta.validation.Valid;
 
@@ -21,8 +22,10 @@ public class AccountController {
 	@Autowired
 	private AccountService accountService;
 	@PostMapping
-	public String createAccount(@Valid @RequestBody CreateAccountRequest user) {
-		return accountService.createAccount(user.getUsername(), user.getPassword());
+	public ResponseEntity<CreateAccountRequest> createAccount(@Valid @RequestBody CreateAccountRequest user) {
+		//return accountService.createAccount(user.getUsername(), user.getPassword());
+		accountService.createAccount(user.getUsername(), user.getPassword());
+		return ResponseEntity.ok(user);
 	}
 	@DeleteMapping
 	public String deleteAccount(@RequestBody CreateAccountRequest user) {

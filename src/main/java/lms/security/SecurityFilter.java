@@ -15,7 +15,7 @@ public class SecurityFilter {
 			.authorizeHttpRequests(auth -> auth
 					.requestMatchers("/LMS/account").permitAll()
 					.anyRequest().authenticated()
-				)
+				);
 		return http.build();
 	}
 }
