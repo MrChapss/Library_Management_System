@@ -11,38 +11,24 @@ import jakarta.transaction.Transactional;
 
 @Service
 public class AccountService {
-
 	@Autowired
 	private AccountRepository accountRepository;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
-	public User createAccount(String username, String password) {
-		User user = User.builder()
-				.username(username)
-				.password(password)
-				.build();
-		
-		return accountRepository.save(user);
-		
+
+	public void createAccount(String username, String password) {
+		if (blankInputs(username,password)){
+			System.out.println("no niggas");
+		} if (isUsernameExist(username)){
+			System.out.println("nigga");
+		} else {
+			User user = User.builder()
+			.username(username)
+			.password(passwordEncoder.encode(password))
+			.build();
+			accountRepository.save(user);
+		}
 	}
-	
-	
-	// create account method with if-else to prevent empty inputs or duplicate username in database
-//	public User createAccount(String username, String password) {
-//		User user = new User();
-//			if (user.blankInputs(username, password)) {
-//				return user;
-//			} if (isUsernameExist(username)) {
-//				return user;
-//			} else {
-//				user.setUsername(username);
-//				user.setPassword(passwordEncoder.encode(password));
-//				return accountRepository.save(user);
-//			}
-//	}
-	
-	
 	@Transactional
 	// delete account method using the repository class with @Transactional (required)
 	
@@ -66,9 +52,11 @@ public class AccountService {
 //		return "Successfully update the account!";
 //	}
 	public boolean isUsernameExist(String username) {
-		if (accountRepository.existsByUsername(username)) {
+		return accountRepository.existsByUsername(username);
+	}
+	public boolean blankInputs(String username, String password) {
+		if (username == null || username.isBlank()) {
 			return true;
-		}
-		return false;
+		} return (password == null || password.isBlank());
 	}
 }

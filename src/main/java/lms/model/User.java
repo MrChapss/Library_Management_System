@@ -7,9 +7,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
+// @Builder annotation - To simplify creation of builder pattern (in short, reduce boilerplate code)
 import lombok.Builder;
+// @Data annotation - To reduce use of POJO (in short, reduce boilerplate code)
 import lombok.Data;
+// @NoArgsConstructor - For hibernate to create empty constructor
 import lombok.NoArgsConstructor;
+// @AllArgsConstructor - For user to create a book immediately if all fields are complete
 import lombok.AllArgsConstructor;
 
 @Entity
@@ -18,10 +22,8 @@ import lombok.AllArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-// this class act as a table structure
-
+// this class act as a table structure in database
 public class User {
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -31,16 +33,5 @@ public class User {
 	@Column(nullable = false)
 	private String password;
 	@Column(nullable = false)
-	@Builder.Default
 	private boolean isAdmin = false;
-	
-	public boolean blankInputs(String username, String password) {
-		if (username.isBlank() || username.equals(null)) {
-			return true;
-		} if (password.isBlank() || password.equals(null)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 }
