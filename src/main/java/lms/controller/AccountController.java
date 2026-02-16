@@ -31,9 +31,10 @@ public class AccountController {
 	public String deleteAccount(@RequestBody CreateAccountRequest user) {
 		return accountService.deleteAccount(user.getUsername());
 	}
-	@PutMapping
-	public String updateAccount(@RequestBody CreateAccountRequest user) {
-		return accountService.updateAccount(user.getId(), user.getUsername(), user.getPassword());
-	}
+	
+//	@PutMapping
+//	public String updateAccount(@RequestBody CreateAccountRequest user) {
+//		return accountService.updateAccount(user.getId(), user.getUsername(), user.getPassword());
+//	}
 	// HINDI DAW DPAT STRING YUNG RETURN NG METHOD SA CONTROLLER
 }

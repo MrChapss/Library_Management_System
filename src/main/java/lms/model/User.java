@@ -9,12 +9,17 @@ import jakarta.persistence.GenerationType;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Entity
-// this class act as a table structure
 @Table(name = "users")
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+// this class act as a table structure
+
 public class User {
 	
 	@Id
@@ -26,6 +31,7 @@ public class User {
 	@Column(nullable = false)
 	private String password;
 	@Column(nullable = false)
+	@Builder.Default
 	private boolean isAdmin = false;
 	
 	public boolean blankInputs(String username, String password) {

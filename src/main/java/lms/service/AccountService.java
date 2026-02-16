@@ -17,13 +17,14 @@ public class AccountService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	
 	public User createAccount(String username, String password) {
-		User user = User.builder();
+		User user = User.builder()
 				.username(username)
 				.password(password)
 				.build();
-		accountRepository.save(user);
+		
+		return accountRepository.save(user);
+		
 	}
 	
 	
@@ -47,23 +48,23 @@ public class AccountService {
 	
 	// 1. para sa admin muna yung ganitong role para ma practice yung authentication at authorization
 	// 2. dapat required muna isulat yung username and password at "delete" na word para ma-delete tlga yung account
-	// logic suggestion
+	// logic suggestion (kailangan muna yung username + old password to change into new password)
 	public String deleteAccount(String username) {
 		accountRepository.findByUsername(username);
 		return "The account with the username '" + username + "'"+ " has been deleted";
 	}
-	@Transactional
-	// update account method using the repository class (findByID) with @Transactional (required)
 	
+	// update account method using the repository class (findByID) with @Transactional (required)
 	// FOR NOW: admin can only access this and can only do the updateAccount for security purposes
 	// try ko dto yung AUTHORIZATION OR AUTHENTICATION
-	public String updateAccount(int id, String username, String password) {
-		User user = accountRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("User not found"));
-		user.setUsername(username);
-		user.setPassword(password);
-		return "Successfully update the account!";
-	}
+	@Transactional
+//	public String updateAccount(int id, String username, String password) {
+//		User user = accountRepository.findById(id)
+//				.orElseThrow(() -> new RuntimeException("User not found"));
+//		user.setUsername(username);
+//		user.setPassword(password);
+//		return "Successfully update the account!";
+//	}
 	public boolean isUsernameExist(String username) {
 		if (accountRepository.existsByUsername(username)) {
 			return true;
