@@ -16,18 +16,18 @@ public class AccountService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	public void createAccount(String username, String password) {
-		if (blankInputs(username,password)){
-			System.out.println("no niggas");
-		} if (isUsernameExist(username)){
-			System.out.println("nigga");
-		} else {
-			User user = User.builder()
-			.username(username)
-			.password(passwordEncoder.encode(password))
-			.build();
-			accountRepository.save(user);
+	public User createAccount(String username, String password) {
+		if (blankInputs(username, password)){
+			throw new IllegalArgumentException("Username and password cannot be blank!");
 		}
+		if (isUsernameExist(username)){
+			throw new UsernameAlreadyExistsException("Username already exists!");
+		}
+		User user = User.builder()
+				.username(username)
+				.password(passwordEncoder.encode(password))
+				.build();
+		return accountRepository.save(user);
 	}
 	@Transactional
 	// delete account method using the repository class with @Transactional (required)
@@ -51,6 +51,12 @@ public class AccountService {
 //		user.setPassword(password);
 //		return "Successfully update the account!";
 //	}
+	public static class UsernameAlreadyExistsException extends RuntimeException{
+		public UsernameAlreadyExistsException(String message){
+			super(message);
+		}
+	}
+
 	public boolean isUsernameExist(String username) {
 		return accountRepository.existsByUsername(username);
 	}

@@ -1,19 +1,19 @@
 package lms.controller;
-
+// MUST ADD DOCUMENTATIONS ON HOW THE IMPORTS WORK AND THE CONTROLLER ITSELF
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 
 import jakarta.validation.Valid;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
 import lms.dto.CreateAccountRequest;
+import lms.dto.ResponseRequest;
 import lms.service.AccountService;
 
 @RestController
@@ -21,20 +21,15 @@ import lms.service.AccountService;
 public class AccountController {
 	@Autowired
 	private AccountService accountService;
+
 	@PostMapping
-	public ResponseEntity<CreateAccountRequest> createAccount(@Valid @RequestBody CreateAccountRequest user) {
-		//return accountService.createAccount(user.getUsername(), user.getPassword());
-		accountService.createAccount(user.getUsername(), user.getPassword());
-		return ResponseEntity.ok(user);
+	public ResponseEntity<ResponseRequest> createAccount(@Valid @RequestBody CreateAccountRequest register) {
+		ResponseRequest response = accountService.createAccount(register.getUsername(), register.getPassword());
+		 //accountService.createAccount(register.getUsername(), register.getPassword());
+		 return ResponseEntity.ok(response);
 	}
 	@DeleteMapping
 	public String deleteAccount(@RequestBody CreateAccountRequest user) {
 		return accountService.deleteAccount(user.getUsername());
 	}
-	
-//	@PutMapping
-//	public String updateAccount(@RequestBody CreateAccountRequest user) {
-//		return accountService.updateAccount(user.getId(), user.getUsername(), user.getPassword());
-//	}
-	// HINDI DAW DPAT STRING YUNG RETURN NG METHOD SA CONTROLLER
 }
