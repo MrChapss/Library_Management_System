@@ -1,5 +1,7 @@
 package lms.model;
 
+import java.time.Instant;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
@@ -37,4 +39,5 @@ public class User {
 	private String password;
 	@Column(nullable = false)
 	private boolean isAdmin = false;
+	private Instant createdAt;
 }

@@ -1,22 +1,27 @@
 package lms.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import lms.model.User;
+import lms.dto.ResponseRequest;
 import lms.repository.AccountRepository;
 
 import jakarta.transaction.Transactional;
 
+import java.time.Instant;
+
 @Service
 public class AccountService {
-	@Autowired
-	private AccountRepository accountRepository;
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	private final AccountRepository accountRepository;
+	private final PasswordEncoder passwordEncoder;
 
-	public User createAccount(String username, String password) {
+	public AccountService (AccountRepository accountRepository,
+						   PasswordEncoder passwordEncoder){
+		this.accountRepository=accountRepository;
+		this.passwordEncoder=passwordEncoder;
+	}
+	public ResponseRequest createAccount(String username, String password) {
 		if (blankInputs(username, password)){
 			throw new IllegalArgumentException("Username and password cannot be blank!");
 		}
@@ -26,9 +31,20 @@ public class AccountService {
 		User user = User.builder()
 				.username(username)
 				.password(passwordEncoder.encode(password))
+				.createdAt(Instant.now())
 				.build();
-		return accountRepository.save(user);
+		User savedUser = accountRepository.save(user);
+		return entityToDTO(savedUser);
 	}
+
+	private ResponseRequest entityToDTO(User user){
+		return ResponseRequest.builder()
+				.id(user.getId())
+				.username(user.getUsername())
+				.createdAt(user.getCreatedAt())
+				.build();
+	}
+
 	@Transactional
 	// delete account method using the repository class with @Transactional (required)
 	
@@ -56,13 +72,11 @@ public class AccountService {
 			super(message);
 		}
 	}
-
 	public boolean isUsernameExist(String username) {
 		return accountRepository.existsByUsername(username);
 	}
 	public boolean blankInputs(String username, String password) {
-		if (username == null || username.isBlank()) {
-			return true;
-		} return (password == null || password.isBlank());
+		return username == null || username.isBlank() ||
+				password == null || password.isBlank();
 	}
 }

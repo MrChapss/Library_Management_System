@@ -1,5 +1,5 @@
 package lms.repository;
-
+// JpaRepository - a created set of save/delete method
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

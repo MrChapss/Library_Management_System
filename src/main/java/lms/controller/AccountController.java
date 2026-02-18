@@ -6,9 +6,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 
 import jakarta.validation.Valid;
 
@@ -19,14 +18,17 @@ import lms.service.AccountService;
 @RestController
 @RequestMapping("/LMS/account")
 public class AccountController {
-	@Autowired
-	private AccountService accountService;
+	private final AccountService accountService;
 
+	public AccountController(AccountService accountService){
+		this.accountService=accountService;
+	}
 	@PostMapping
 	public ResponseEntity<ResponseRequest> createAccount(@Valid @RequestBody CreateAccountRequest register) {
-		ResponseRequest response = accountService.createAccount(register.getUsername(), register.getPassword());
-		 //accountService.createAccount(register.getUsername(), register.getPassword());
-		 return ResponseEntity.ok(response);
+		ResponseRequest response = accountService.createAccount(
+				register.getUsername(),
+				register.getPassword());
+		 return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 	@DeleteMapping
 	public String deleteAccount(@RequestBody CreateAccountRequest user) {
