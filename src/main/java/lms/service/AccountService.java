@@ -4,7 +4,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import lms.model.User;
-import lms.dto.ResponseRequest;
+import lms.controller.GlobalExceptionHandler;
+import lms.dto.RegisterResponseDTO;
 import lms.repository.AccountRepository;
 
 import jakarta.transaction.Transactional;
@@ -15,13 +16,16 @@ import java.time.Instant;
 public class AccountService {
 	private final AccountRepository accountRepository;
 	private final PasswordEncoder passwordEncoder;
+	private final GlobalExceptionHandler globalExceptionHandler;
 
 	public AccountService (AccountRepository accountRepository,
-						   PasswordEncoder passwordEncoder){
+						   PasswordEncoder passwordEncoder,
+						   GlobalExceptionHandler globalExceptionHandler){
 		this.accountRepository=accountRepository;
 		this.passwordEncoder=passwordEncoder;
+		this.globalExceptionHandler=globalExceptionHandler;
 	}
-	public ResponseRequest createAccount(String username, String password) {
+	public RegisterResponseDTO createAccount(String username, String password) {
 		if (blankInputs(username, password)){
 			throw new IllegalArgumentException("Username and password cannot be blank!");
 		}
@@ -36,15 +40,13 @@ public class AccountService {
 		User savedUser = accountRepository.save(user);
 		return entityToDTO(savedUser);
 	}
-
-	private ResponseRequest entityToDTO(User user){
-		return ResponseRequest.builder()
+	private RegisterResponseDTO entityToDTO(User user){
+		return RegisterResponseDTO.builder()
 				.id(user.getId())
 				.username(user.getUsername())
 				.createdAt(user.getCreatedAt())
 				.build();
 	}
-
 	@Transactional
 	// delete account method using the repository class with @Transactional (required)
 	

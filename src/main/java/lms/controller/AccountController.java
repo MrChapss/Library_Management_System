@@ -11,27 +11,44 @@ import org.springframework.http.HttpStatus;
 
 import jakarta.validation.Valid;
 
-import lms.dto.CreateAccountRequest;
-import lms.dto.ResponseRequest;
+import lms.api.ApiResponse;
+import lms.dto.RegisterAccountDTO;
+import lms.dto.RegisterResponseDTO;
 import lms.service.AccountService;
+import lms.controller.GlobalExceptionHandler;
+
+import java.time.Instant;
 
 @RestController
 @RequestMapping("/LMS/account")
 public class AccountController {
 	private final AccountService accountService;
+	private final GlobalExceptionHandler globalExceptionHandler;
 
-	public AccountController(AccountService accountService){
+	public AccountController(AccountService accountService,
+							 GlobalExceptionHandler globalExceptionHandler){
 		this.accountService=accountService;
+		this.globalExceptionHandler=globalExceptionHandler;
 	}
+
 	@PostMapping
-	public ResponseEntity<ResponseRequest> createAccount(@Valid @RequestBody CreateAccountRequest register) {
-		ResponseRequest response = accountService.createAccount(
+	public ResponseEntity<ApiResponse<RegisterResponseDTO>> createAccount(@Valid @RequestBody RegisterAccountDTO register) {
+		RegisterResponseDTO accountData = accountService.createAccount(
 				register.getUsername(),
-				register.getPassword());
-		 return ResponseEntity.status(HttpStatus.CREATED).body(response);
+				register.getPassword()
+		);
+		ApiResponse<RegisterResponseDTO> response = ApiResponse.<RegisterResponseDTO>builder()
+				.timestamp(Instant.now())
+				.status(HttpStatus.CREATED.value())
+				.message("Account created successfully")
+				.data(accountData)
+				.errors(null)
+				.build();
+
+		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 	@DeleteMapping
-	public String deleteAccount(@RequestBody CreateAccountRequest user) {
+	public String deleteAccount(@RequestBody RegisterAccountDTO user) {
 		return accountService.deleteAccount(user.getUsername());
 	}
 }

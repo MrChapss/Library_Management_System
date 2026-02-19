@@ -11,9 +11,9 @@ import jakarta.persistence.GenerationType;
 
 // @Builder annotation - To simplify creation of builder pattern (in short, reduce boilerplate code)
 import lombok.Builder;
-// @Setter annotation - setter method (in short, reduce boilerplate code)
+// @Setter annotation - setter method
 import lombok.Setter;
-// @Getter annotation - getter method (in short, reduce boilerplate code)
+// @Getter annotation - getter method
 import lombok.Getter;
 // @NoArgsConstructor - For hibernate to create empty constructor
 import lombok.NoArgsConstructor;
