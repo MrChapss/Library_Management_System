@@ -15,7 +15,7 @@ import lms.api.ApiResponse;
 import lms.dto.RegisterAccountDTO;
 import lms.dto.RegisterResponseDTO;
 import lms.service.AccountService;
-import lms.controller.GlobalExceptionHandler;
+import lms.exception.GlobalExceptionHandler;
 
 import java.time.Instant;
 
@@ -52,5 +52,3 @@ public class AccountController {
 		return accountService.deleteAccount(user.getUsername());
 	}
 }
-//// working on it
-//testign water

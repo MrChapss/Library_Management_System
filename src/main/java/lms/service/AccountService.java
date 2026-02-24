@@ -4,9 +4,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import lms.model.User;
-import lms.controller.GlobalExceptionHandler;
 import lms.dto.RegisterResponseDTO;
 import lms.repository.AccountRepository;
+import lms.exception.UsernameAlreadyExistsException;
+import lms.exception.IllegalArgumentException;
 
 import jakarta.transaction.Transactional;
 
@@ -16,21 +17,18 @@ import java.time.Instant;
 public class AccountService {
 	private final AccountRepository accountRepository;
 	private final PasswordEncoder passwordEncoder;
-	private final GlobalExceptionHandler globalExceptionHandler;
 
 	public AccountService (AccountRepository accountRepository,
-						   PasswordEncoder passwordEncoder,
-						   GlobalExceptionHandler globalExceptionHandler){
+						   PasswordEncoder passwordEncoder){
 		this.accountRepository=accountRepository;
 		this.passwordEncoder=passwordEncoder;
-		this.globalExceptionHandler=globalExceptionHandler;
 	}
 	public RegisterResponseDTO createAccount(String username, String password) {
 		if (blankInputs(username, password)){
-			throw new IllegalArgumentException("Username and password cannot be blank!");
+			throw new IllegalArgumentException("Username or password cannot be blank!");
 		}
 		if (isUsernameExist(username)){
-			throw new UsernameAlreadyExistsException("Username already exists!");
+			throw new UsernameAlreadyExistsException("Username already exists");
 		}
 		User user = User.builder()
 				.username(username)
@@ -69,11 +67,6 @@ public class AccountService {
 //		user.setPassword(password);
 //		return "Successfully update the account!";
 //	}
-	public static class UsernameAlreadyExistsException extends RuntimeException{
-		public UsernameAlreadyExistsException(String message){
-			super(message);
-		}
-	}
 	public boolean isUsernameExist(String username) {
 		return accountRepository.existsByUsername(username);
 	}
