@@ -5,7 +5,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import lms.model.User;
 import lms.dto.RegisterResponseDTO;
+import lms.dto.LoginAccountDTO;
 import lms.repository.AccountRepository;
+
+import lms.exception.RequiredMinimumCharacters;
 import lms.exception.UsernameAlreadyExistsException;
 import lms.exception.IllegalArgumentException;
 
@@ -25,10 +28,15 @@ public class AccountService {
 	}
 	public RegisterResponseDTO createAccount(String username, String password) {
 		if (blankInputs(username, password)){
-			throw new IllegalArgumentException("Username or password cannot be blank!");
+			throw new IllegalArgumentException("The username or password cannot be empty!");
+		} if (isUsernameExist(username)){
+			throw new UsernameAlreadyExistsException("The username already exists");
 		}
-		if (isUsernameExist(username)){
-			throw new UsernameAlreadyExistsException("Username already exists");
+		if (requiredMinimumCharactersUN(username)){
+			throw new RequiredMinimumCharacters("The username must be at least 3 characters long");
+		}
+		if (requiredMinimumCharactersPassword(password)) {
+			throw new RequiredMinimumCharacters("The password must be at least 8 characters long");
 		}
 		User user = User.builder()
 				.username(username)
@@ -45,6 +53,22 @@ public class AccountService {
 				.createdAt(user.getCreatedAt())
 				.build();
 	}
+	public User loginAccount(String username, String password){
+		User user = new User();
+		if (accountRepository.findByUsernameAndPassword(username, password)){
+			User hashedPassword = accountRepository.findPasswordByUsername(user.getUsername());
+
+			passwordEncoder.matches(password, String.valueOf(hashedPassword));
+			System.out.println("Success");
+		}
+		return user;
+	}
+
+
+
+
+
+
 	@Transactional
 	// delete account method using the repository class with @Transactional (required)
 	
@@ -70,6 +94,8 @@ public class AccountService {
 	public boolean isUsernameExist(String username) {
 		return accountRepository.existsByUsername(username);
 	}
+	public boolean requiredMinimumCharactersUN(String username){return username.length() < 5;}
+	public boolean requiredMinimumCharactersPassword(String password){return password.length() < 8;}
 	public boolean blankInputs(String username, String password) {
 		return username == null || username.isBlank() ||
 				password == null || password.isBlank();

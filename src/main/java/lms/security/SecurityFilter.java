@@ -13,7 +13,8 @@ public class SecurityFilter {
 		http
 			.csrf(csrf -> csrf.disable())
 			.authorizeHttpRequests(auth -> auth
-					.requestMatchers("/LMS/account").permitAll()
+					.requestMatchers("/LMS/register",
+										"/LMS/login").permitAll()
 					.anyRequest().authenticated()
 				);
 		return http.build();

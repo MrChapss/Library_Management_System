@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import lms.api.ApiResponse;
 
 import java.time.Instant;
-import java.util.List;
+//import java.util.List;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.CONFLICT.value())
                 .message("Account creation failed")
                 .data(null)
-                .errors(List.of(ex.getMessage()))
+                .error(ex.getMessage())
                 .build();
         return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
     }
@@ -35,8 +35,20 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST.value())
                 .message("Invalid input")
                 .data(null)
-                .errors(List.of(ex.getMessage()))
+                .error(ex.getMessage())
                 .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
+    @ExceptionHandler(RequiredMinimumCharacters.class)
+    public ResponseEntity<ApiResponse<Void>> handleMinimumCharacters(
+            RequiredMinimumCharacters ex) {
+        ApiResponse<Void> response = ApiResponse.<Void>builder()
+                .timestamp(Instant.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .message("Validation failed")
+                .error(ex.getMessage())
+                .build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
 }

@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
-import java.util.List;
+//import java.util.List;
 
 @Getter
 @Setter
@@ -23,5 +23,6 @@ public class ApiResponse<T> {
     private String message;
     // what the hell is T bro (search this later)
     private T data;
-    private List<String> errors;
+    //private List<String> errors;
+    private String error;
 }
