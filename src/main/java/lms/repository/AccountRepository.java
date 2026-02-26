@@ -8,7 +8,6 @@ import lms.model.User;
 public interface AccountRepository extends JpaRepository<User, Integer> {
 	// this is where add/delete/update in the database
 	// since I extend JpaRepository it already created CRUD methods
-	boolean findByUsername(String username);
 	boolean existsByUsername(String username);
 	boolean findByUsernameAndPassword(String username, String password);
 	User findPasswordByUsername(String username);

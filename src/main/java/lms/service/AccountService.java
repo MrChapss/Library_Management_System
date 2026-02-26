@@ -5,7 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import lms.model.User;
 import lms.dto.RegisterResponseDTO;
-import lms.dto.LoginAccountDTO;
+import lms.dto.LoginResponseDTO;
 import lms.repository.AccountRepository;
 
 import lms.exception.RequiredMinimumCharacters;
@@ -42,6 +42,7 @@ public class AccountService {
 				.username(username)
 				.password(passwordEncoder.encode(password))
 				.createdAt(Instant.now())
+				.last_login_at(Instant.now())
 				.build();
 		User savedUser = accountRepository.save(user);
 		return entityToDTO(savedUser);
@@ -53,44 +54,27 @@ public class AccountService {
 				.createdAt(user.getCreatedAt())
 				.build();
 	}
-	public User loginAccount(String username, String password){
-		User user = new User();
-		if (accountRepository.findByUsernameAndPassword(username, password)){
-			User hashedPassword = accountRepository.findPasswordByUsername(user.getUsername());
-
-			passwordEncoder.matches(password, String.valueOf(hashedPassword));
-			System.out.println("Success");
+	@Transactional
+	public LoginResponseDTO loginAccount(String username, String password){
+		User passwordDB = accountRepository.findPasswordByUsername(username);
+		boolean matchPassword = passwordEncoder.matches(password,passwordDB.getPassword());
+		if (matchPassword){
+			// idk how to update the last_login_at column in database
+			return response(passwordDB);
 		}
-		return user;
+		throw new IllegalArgumentException("Username or password is not correct!");
+	}
+	private LoginResponseDTO response(User user){
+		return LoginResponseDTO.builder()
+				.username(user.getUsername())
+				.last_login_at(Instant.now())
+				.build();
 	}
 
-
-
-
-
-
-	@Transactional
-	// delete account method using the repository class with @Transactional (required)
-	
-	// 1. para sa admin muna yung ganitong role para ma practice yung authentication at authorization
-	// 2. dapat required muna isulat yung username and password at "delete" na word para ma-delete tlga yung account
-	// logic suggestion (kailangan muna yung username + old password to change into new password)
 	public String deleteAccount(String username) {
-		accountRepository.findByUsername(username);
+		accountRepository.existsByUsername(username);
 		return "The account with the username '" + username + "'"+ " has been deleted";
 	}
-	
-	// update account method using the repository class (findByID) with @Transactional (required)
-	// FOR NOW: admin can only access this and can only do the updateAccount for security purposes
-	// try ko dto yung AUTHORIZATION OR AUTHENTICATION
-	@Transactional
-//	public String updateAccount(int id, String username, String password) {
-//		User user = accountRepository.findById(id)
-//				.orElseThrow(() -> new RuntimeException("User not found"));
-//		user.setUsername(username);
-//		user.setPassword(password);
-//		return "Successfully update the account!";
-//	}
 	public boolean isUsernameExist(String username) {
 		return accountRepository.existsByUsername(username);
 	}

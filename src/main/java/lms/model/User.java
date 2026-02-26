@@ -40,4 +40,5 @@ public class User {
 	@Column(nullable = false)
 	private boolean isAdmin = false;
 	private Instant createdAt;
+	private Instant last_login_at;
 }

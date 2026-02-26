@@ -10,6 +10,8 @@ import jakarta.validation.Valid;
 import lms.api.ApiResponse;
 import lms.dto.RegisterAccountDTO;
 import lms.dto.RegisterResponseDTO;
+import lms.dto.LoginAccountDTO;
+import lms.dto.LoginResponseDTO;
 import lms.service.AccountService;
 
 import java.time.Instant;
@@ -39,10 +41,19 @@ public class AccountController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 	@PostMapping("/login")
-	public String loginAccount(@RequestParam String username,
-							   @RequestParam String password){
-		accountService.loginAccount(username,password);
-		return "test";
+	public ResponseEntity<ApiResponse<LoginResponseDTO>> loginAccount(@RequestBody LoginAccountDTO login){
+		LoginResponseDTO loginData = accountService.loginAccount(
+				login.getUsername(),
+				login.getPassword()
+		);
+		ApiResponse<LoginResponseDTO> loginResponse = ApiResponse.<LoginResponseDTO>builder()
+				.timestamp(Instant.now())
+				.status(HttpStatus.OK.value())
+				.message("Login sucessfully")
+				.data(loginData)
+				.build();
+		return ResponseEntity.status(HttpStatus.OK).body(loginResponse);
+
 	}
 
 	@DeleteMapping
