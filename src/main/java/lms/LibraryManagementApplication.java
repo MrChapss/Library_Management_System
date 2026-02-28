@@ -17,8 +17,6 @@ public class LibraryManagementApplication {
 // 
 
 /* GAGAWIN BUKAS (DAPAT MAGAWA NA TLGA)
- * 1. password hashing
- * 2. introduction to security config
- * 2. use JWT token in login for authentication
- *
+ * 1. use JWT token in login for authentication
+ * 2.
  */

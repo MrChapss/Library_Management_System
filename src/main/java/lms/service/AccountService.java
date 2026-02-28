@@ -67,7 +67,7 @@ public class AccountService {
 			accountRepository.save(userDB);
 			return response(userDB);
 		}
-		// if ever blank inputs
+		// if ever blank password input
 		throw new IllegalArgumentException("The username or password is incorrect!");
 	}
 	private LoginResponseDTO response(User user){
