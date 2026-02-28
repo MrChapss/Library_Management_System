@@ -1,5 +1,6 @@
 package lms.service;
 
+import lms.dto.LoginAccountDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -42,7 +43,6 @@ public class AccountService {
 				.username(username)
 				.password(passwordEncoder.encode(password))
 				.createdAt(Instant.now())
-				.last_login_at(Instant.now())
 				.build();
 		User savedUser = accountRepository.save(user);
 		return entityToDTO(savedUser);
@@ -56,11 +56,13 @@ public class AccountService {
 	}
 	@Transactional
 	public LoginResponseDTO loginAccount(String username, String password){
-		User passwordDB = accountRepository.findPasswordByUsername(username);
-		boolean matchPassword = passwordEncoder.matches(password,passwordDB.getPassword());
+		User userDB = accountRepository.findPasswordByUsername(username);
+		boolean matchPassword = passwordEncoder.matches(password,userDB.getPassword());
 		if (matchPassword){
-			// idk how to update the last_login_at column in database
-			return response(passwordDB);
+			// its working now
+			userDB.setLastLoginAt(Instant.now());
+			accountRepository.save(userDB);
+			return response(userDB);
 		}
 		throw new IllegalArgumentException("Username or password is not correct!");
 	}
@@ -70,7 +72,6 @@ public class AccountService {
 				.last_login_at(Instant.now())
 				.build();
 	}
-
 	public String deleteAccount(String username) {
 		accountRepository.existsByUsername(username);
 		return "The account with the username '" + username + "'"+ " has been deleted";

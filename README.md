@@ -1,4 +1,5 @@
 Library Management System (Objective)
+THIS WILL BE REPLACED LATER
 1. How to plan a project before coding
 2. How to efficiently use the OOP of Java
 3. How to design a structure of the code

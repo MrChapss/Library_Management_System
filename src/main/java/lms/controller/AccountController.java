@@ -49,7 +49,7 @@ public class AccountController {
 		ApiResponse<LoginResponseDTO> loginResponse = ApiResponse.<LoginResponseDTO>builder()
 				.timestamp(Instant.now())
 				.status(HttpStatus.OK.value())
-				.message("Login sucessfully")
+				.message("Login successfully")
 				.data(loginData)
 				.build();
 		return ResponseEntity.status(HttpStatus.OK).body(loginResponse);
