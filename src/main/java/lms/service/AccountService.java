@@ -56,6 +56,9 @@ public class AccountService {
 	}
 	@Transactional
 	public LoginResponseDTO loginAccount(String username, String password){
+		if (!isUsernameExist(username)){
+			throw new IllegalArgumentException("The username or password is incorrect!");
+		}
 		User userDB = accountRepository.findPasswordByUsername(username);
 		boolean matchPassword = passwordEncoder.matches(password,userDB.getPassword());
 		if (matchPassword){
@@ -64,7 +67,8 @@ public class AccountService {
 			accountRepository.save(userDB);
 			return response(userDB);
 		}
-		throw new IllegalArgumentException("Username or password is not correct!");
+		// if ever blank inputs
+		throw new IllegalArgumentException("The username or password is incorrect!");
 	}
 	private LoginResponseDTO response(User user){
 		return LoginResponseDTO.builder()
