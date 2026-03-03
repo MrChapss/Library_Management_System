@@ -1,6 +1,5 @@
 package lms.service;
 
-import lms.dto.LoginAccountDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -61,20 +60,20 @@ public class AccountService {
 		}
 		User userDB = accountRepository.findPasswordByUsername(username);
 		boolean matchPassword = passwordEncoder.matches(password,userDB.getPassword());
+
 		if (matchPassword){
-			// its working now
+			// get the username and last login timestamp in database
+			LoginResponseDTO test = LoginResponseDTO.builder()
+				.username(userDB.getUsername())
+				.last_login_at(userDB.getLastLoginAt())
+				.build();
+			// save the new login timestamp
 			userDB.setLastLoginAt(Instant.now());
 			accountRepository.save(userDB);
-			return response(userDB);
+			return test;
 		}
 		// if ever blank password input
 		throw new IllegalArgumentException("The username or password is incorrect!");
-	}
-	private LoginResponseDTO response(User user){
-		return LoginResponseDTO.builder()
-				.username(user.getUsername())
-				.last_login_at(Instant.now())
-				.build();
 	}
 	public String deleteAccount(String username) {
 		accountRepository.existsByUsername(username);
