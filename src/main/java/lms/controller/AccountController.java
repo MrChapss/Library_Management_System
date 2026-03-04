@@ -61,3 +61,5 @@ public class AccountController {
 		return accountService.deleteAccount(user.getUsername());
 	}
 }
+
+// I HAVE TO DELETE THIS AGAIN OR MAYBE DO KEEP AND LEARN FROM IT (IM THINGKING ON IT)
