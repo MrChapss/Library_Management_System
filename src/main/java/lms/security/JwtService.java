@@ -10,7 +10,10 @@ import io.jsonwebtoken.io.Decoders;
 import org.springframework.stereotype.Service;
 // Annotation used for using the value inside the application.properties file
 import org.springframework.beans.factory.annotation.Value;
-
+// To use the builder in Jwts
+import io.jsonwebtoken.Jwts;
+// Used to set the current time for issuedAt
+import java.util.Date;
 @Service
 public class JwtService {
     /* The syntax for the @Value annotation is that the declaration of the variable
@@ -20,10 +23,18 @@ public class JwtService {
     @Value("${jwt.expirationToken}")
     private long expirationToken;
 
-    // method that generate validate a token using the secret key
+    // method that validate a token using the secret key
     private SecretKey getSigningKey(){
         byte[] byteKey = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(byteKey);
     }
-    // initial commit
+    // method for generating token
+    public String generateToken(String username){
+        return Jwts.builder()
+            .subject(username)
+            .issuedAt(new Date(System.currentTimeMillis()))
+            .expiration(new Date(System.currentTimeMillis() + expirationToken))
+            .signWith(getSigningKey())
+            .compact();
+    }
 }
