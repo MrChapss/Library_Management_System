@@ -20,8 +20,6 @@ import java.util.Date;
 // Used as a variable for parsed token (claims) and extract subject (username) in the token
 import io.jsonwebtoken.Claims;
 
-
-
 @Service
 public class JwtService {
     /* The syntax for the @Value annotation is that the declaration of the variable
