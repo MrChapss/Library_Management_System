@@ -1,16 +1,15 @@
 package lms.security;
 
-// Used for a method that require to return an object as key object
-import javax.crypto.SecretKey;
-// Used to transfer a byte[] data into a key object
-import io.jsonwebtoken.JwtParserBuilder;
-import io.jsonwebtoken.security.Keys;
-// Used to decode the String secretKey into a byte[] data
-import io.jsonwebtoken.io.Decoders;
 // For springboot to recognize is bean type of service
 import org.springframework.stereotype.Service;
 // Annotation used for using the value inside the application.properties file
 import org.springframework.beans.factory.annotation.Value;
+// Used for a method that require to return an object as key object
+import javax.crypto.SecretKey;
+// Used to transfer a byte[] data into a key object
+import io.jsonwebtoken.security.Keys;
+// Used to decode the String secretKey into a byte[] data
+import io.jsonwebtoken.io.Decoders;
 // To use the builder in Jwts
 import io.jsonwebtoken.Jwts;
 // Used to read the details of token
@@ -19,9 +18,10 @@ import io.jsonwebtoken.JwtParser;
 import java.util.Date;
 // Used as a variable for parsed token (claims) and extract subject (username) in the token
 import io.jsonwebtoken.Claims;
-
+//
 @Service
 public class JwtService {
+
     /* The syntax for the @Value annotation is that the declaration of the variable
        must be similar to the name in the application properties. */
     @Value("${jwt.secretKey}")
@@ -34,7 +34,7 @@ public class JwtService {
         byte[] byteKey = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(byteKey);
     }
-    // tell the main purpose of this method (provide example if necessary)
+    // The main purpose of the method is to provide a token that user will less enter username and password every login
     // method for generating token
     public String generateToken(String username){
         return Jwts.builder()
@@ -46,8 +46,8 @@ public class JwtService {
             // the version of ".builder()" but in Jwts
             .compact();
     }
-    // what's the main purpose of this method? (provide example if necessary)
-    // method for extracting username or reader of token
+    // The main purpose of this method is to identify who made a request in the server
+    // Method for reads username out of the token
     public String extractUsername(String token) {
         JwtParser tokenParser = Jwts.parser()
             .verifyWith(getSigningKey())
@@ -55,4 +55,20 @@ public class JwtService {
         Claims tokenClaims = tokenParser.parseSignedClaims(token).getPayload();
         return tokenClaims.getSubject();
     }
-}//initial commit
+
+    public boolean isTokenValid(String token, String username){
+        return true;
+    }
+
+    private boolean isTokenExpired(String token){
+        // read the token
+       JwtParser tokenDetails = Jwts.parser()
+               .verifyWith(getSigningKey())
+               .build();
+       // get a detail from the token
+       Claims getTokenExpiration = tokenDetails.parseSignedClaims(token).getPayload();
+       // error incompatible types
+       return getTokenExpiration.getExpiration();
+    }
+
+}
