@@ -19,6 +19,7 @@ import java.util.Date;
 // Used as a variable for parsed token (claims) and extract subject (username) in the token
 import io.jsonwebtoken.Claims;
 //
+import org.springframework.security.core.userdetails.UserDetails;
 @Service
 public class JwtService {
 
@@ -55,20 +56,18 @@ public class JwtService {
         Claims tokenClaims = tokenParser.parseSignedClaims(token).getPayload();
         return tokenClaims.getSubject();
     }
-
-    public boolean isTokenValid(String token, String username){
-        return true;
+    public boolean isTokenValid(String token, UserDetails details) {
+        String userName = extractUsername(token);
+        userName.equals(details.getUsername());
     }
-
     private boolean isTokenExpired(String token){
         // read the token
        JwtParser tokenDetails = Jwts.parser()
                .verifyWith(getSigningKey())
                .build();
        // get a detail from the token
-       Claims getTokenExpiration = tokenDetails.parseSignedClaims(token).getPayload();
-       // error incompatible types
-       return getTokenExpiration.getExpiration();
+       Claims tokenInfo = tokenDetails.parseSignedClaims(token).getPayload();
+       // return the true if not expired, return false if expired
+       return (new Date(System.currentTimeMillis()).before(tokenInfo.getExpiration()));
     }
-// initial commit
 }
