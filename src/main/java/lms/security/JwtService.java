@@ -18,7 +18,7 @@ import io.jsonwebtoken.JwtParser;
 import java.util.Date;
 // Used as a variable for parsed token (claims) and extract subject (username) in the token
 import io.jsonwebtoken.Claims;
-//
+// Used for representing user object data
 import org.springframework.security.core.userdetails.UserDetails;
 @Service
 public class JwtService {
@@ -49,23 +49,27 @@ public class JwtService {
     }
     // The main purpose of this method is to identify who made a request in the server
     // Method for reads username out of the token
-    public String extractUsername(String token) {
+    private String extractUsername(String token) {
         JwtParser tokenParser = Jwts.parser()
             .verifyWith(getSigningKey())
             .build();
         Claims tokenClaims = tokenParser.parseSignedClaims(token).getPayload();
         return tokenClaims.getSubject();
     }
-    public boolean isTokenValid(String token, UserDetails details) {
+    // The main purpose is to validate the token
+    private boolean isTokenValid(String token, UserDetails details) {
+        // 1. extract the username
         String userName = extractUsername(token);
-        userName.equals(details.getUsername());
+        // true, if the extracted username is equal to user details and not expiration of the token
+        return (details.getUsername().equals(userName) && !isTokenExpired(token));
     }
+    // This is a helper method for "isTokenValid" for preventing expired token
     private boolean isTokenExpired(String token){
         // read the token
        JwtParser tokenDetails = Jwts.parser()
                .verifyWith(getSigningKey())
                .build();
-       // get a detail from the token
+       // get the information from the token
        Claims tokenInfo = tokenDetails.parseSignedClaims(token).getPayload();
        // return the true if not expired, return false if expired
        return (new Date(System.currentTimeMillis()).before(tokenInfo.getExpiration()));
