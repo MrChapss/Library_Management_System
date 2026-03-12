@@ -69,7 +69,7 @@ public class JwtService {
        JwtParser tokenDetails = Jwts.parser()
                .verifyWith(getSigningKey())
                .build();
-       // get the information from the token
+       // Claims "tokenInfo" hold all the data from the token (I get the actual data using the .getPayLoad() method)
        Claims tokenInfo = tokenDetails.parseSignedClaims(token).getPayload();
        // return the true if not expired, return false if expired
        return (new Date(System.currentTimeMillis()).before(tokenInfo.getExpiration()));
