@@ -2,33 +2,44 @@ package lms.security;
 
 // Used to filter once per request only (to avoid multiple or flood request?)
 import org.springframework.web.filter.OncePerRequestFilter;
+// HttpServlet is the way of java handling incoming HTTP requests
 import jakarta.servlet.http.HttpServletRequest;
+// ServletResponse is the way of java handling outgoing HTTP response
 import jakarta.servlet.http.HttpServletResponse;
+// The purpose is to pass it forward to next filter
 import jakarta.servlet.FilterChain;
+// ServletException is used when there's wrong in Servlet(HTTP request) or Filter layer.
 import jakarta.servlet.ServletException;
+// Used when something wrong in reading/writing request or response data
 import java.io.IOException;
-// why use component? what's the use of component in this class?
+// To tell spring to recognize this as bean (@Component = general class recognized by spring)
 import org.springframework.stereotype.Component;
-// Used for extracting username and validate a token
-import lms.security.JwtService;
 // To get user info in database by using username
 import lms.service.AccountService;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter{
+    // If same package I can just declare it, If not I have to import it.
     final private JwtService jwtService;
     final private AccountService accountService;
-
+    // constructor injector to use the methods inside the classes
     public JwtFilter (JwtService jwtService,
                       AccountService accountService){
-        this.accountService=accountService;
         this.jwtService=jwtService;
+        this.accountService=accountService;
     }
+    // I don't know what is this and what for
     @Override
+    // doFilterInternal(...) where filter logic resides (similar to main method)
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain
                                     ) throws ServletException, IOException{
+        // test
+        // if condition ko na mag h-handle ng header null at header does not start with bearer/user name
+        if (request.getHeader(null) == null ){}
 
     }
 }
+// need natin ma-understand this all annotation kahit comment lang natin
+//
