@@ -36,10 +36,10 @@ public class JwtFilter extends OncePerRequestFilter{
                                     FilterChain filterChain
                                     ) throws ServletException, IOException{
         // test
-        // if condition ko na mag h-handle ng header null at header does not start with bearer/user name
+        // if condition ko na mag h-handle ng header null at header does not start with bearer/username
         if (request.getHeader(null) == null ){}
 
     }
 }
 // need natin ma-understand this all annotation kahit comment lang natin
-//
+// tuloy ko to bukas (pagod na ako ngayong araw hahaha)
