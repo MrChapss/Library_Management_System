@@ -1,6 +1,7 @@
 package lms.security;
 
 // Used to filter once per request only (to avoid multiple or flood request?)
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.web.filter.OncePerRequestFilter;
 // HttpServlet is the way of java handling incoming HTTP requests
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,10 +37,12 @@ public class JwtFilter extends OncePerRequestFilter{
                                     FilterChain filterChain
                                     ) throws ServletException, IOException{
         // test
-        // if condition ko na mag h-handle ng header null at header does not start with bearer/username
-        if (request.getHeader(null) == null ){}
-
+        // nag if condition ako para meron h-handle ng header null at header does not start with bearer/username
+        // who tf is "Bearer "?! siguro kailangan ko mag import ng bearer hahaah tangina tlga ng mga annotation neto
+        if (request.getHeader("Authorization") == null || !response.containsHeader("Bearer ")){
+            filterChain.doFilter(request, response);
+        }
+        //fuck me
     }
 }
 // need natin ma-understand this all annotation kahit comment lang natin
-// tuloy ko to bukas (pagod na ako ngayong araw hahaha)
