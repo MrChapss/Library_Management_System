@@ -17,6 +17,7 @@ import java.io.IOException;
 import org.springframework.stereotype.Component;
 // To get user info in database by using username
 import lms.service.AccountService;
+//
 
 @Component
 public class JwtFilter extends OncePerRequestFilter{
@@ -36,13 +37,18 @@ public class JwtFilter extends OncePerRequestFilter{
                                     HttpServletResponse response,
                                     FilterChain filterChain
                                     ) throws ServletException, IOException{
-        // test
-        // nag if condition ako para meron h-handle ng header null at header does not start with bearer/username
-        // who tf is "Bearer "?! siguro kailangan ko mag import ng bearer hahaah tangina tlga ng mga annotation neto
-        if (request.getHeader("Authorization") == null || !response.containsHeader("Bearer ")){
+        // Using if conditional to handle null header and not starting in bearer
+        String authorizationHeader = request.getHeader("Authorization");
+        String bearerHeader = request.getHeader("Bearer ");
+        // the update version have a variable that holds the authorization and bearer and also divide into 2 if condition
+        if (authorizationHeader == null){
             filterChain.doFilter(request, response);
+            return;
         }
-        //fuck me
+        if (!bearerHeader.startsWith("Bearer ")){
+            filterChain.doFilter(request, response);
+            return;
+        }
     }
 }
 // need natin ma-understand this all annotation kahit comment lang natin
