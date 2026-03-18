@@ -1,6 +1,7 @@
 package lms.security;
 
 // Used to filter once per request only (to avoid multiple or flood request?)
+import lombok.Value;
 import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.web.filter.OncePerRequestFilter;
 // HttpServlet is the way of java handling incoming HTTP requests
@@ -39,11 +40,12 @@ public class JwtFilter extends OncePerRequestFilter{
                                     ) throws ServletException, IOException{
         // Using if conditional to handle null header and not starting in bearer
         String authorizationHeader = request.getHeader("Authorization");
-        
-        // the update version have a variable that holds the authorization and bearer and also divide into 2 if condition
-        if (authorizationHeader == null
-
-        ){}
+        if (authorizationHeader == null ||
+                !authorizationHeader.startsWith("Bearer ")){
+                // filtering it and pass then stop using the return.
+               filterChain.doFilter(request, response);
+               return;
+        }
     }
 }
 // need natin ma-understand this all annotation kahit comment lang natin
