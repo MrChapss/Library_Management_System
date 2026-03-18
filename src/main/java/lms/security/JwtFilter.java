@@ -39,16 +39,11 @@ public class JwtFilter extends OncePerRequestFilter{
                                     ) throws ServletException, IOException{
         // Using if conditional to handle null header and not starting in bearer
         String authorizationHeader = request.getHeader("Authorization");
-        String bearerHeader = request.getHeader("Bearer ");
+        
         // the update version have a variable that holds the authorization and bearer and also divide into 2 if condition
-        if (authorizationHeader == null){
-            filterChain.doFilter(request, response);
-            return;
-        }
-        if (!bearerHeader.startsWith("Bearer ")){
-            filterChain.doFilter(request, response);
-            return;
-        }
+        if (authorizationHeader == null
+
+        ){}
     }
 }
 // need natin ma-understand this all annotation kahit comment lang natin
