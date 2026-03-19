@@ -40,12 +40,19 @@ public class JwtFilter extends OncePerRequestFilter{
                                     ) throws ServletException, IOException{
         // Using if conditional to handle null header and not starting in bearer
         String authorizationHeader = request.getHeader("Authorization");
-        if (authorizationHeader == null ||
-                !authorizationHeader.startsWith("Bearer ")){
-                // filtering it and pass then stop using the return.
-               filterChain.doFilter(request, response);
-               return;
+            if (authorizationHeader == null ||
+                    // filtering it and pass then stop using the return.
+                    !authorizationHeader.startsWith("Bearer ")){
+                filterChain.doFilter(request, response);
+                return;
+            }
+            // prefix variable + length() = amount of index of word in a variable
+            // (in short, no need to manually type the index to remove the "Bearer " in the token)
+            String prefix = "Bearer ";
+            // substring job is to extract token using the index starting from "Bearer "
+            String token = authorizationHeader.substring(prefix.length()).trim();
+            String username = jwtService.extractUsername(token);
         }
-    }
 }
+
 // need natin ma-understand this all annotation kahit comment lang natin

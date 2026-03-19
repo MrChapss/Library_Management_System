@@ -49,7 +49,7 @@ public class JwtService {
     }
     // The main purpose of this method is to identify who made a request in the server
     // Method for reads username out of the token
-    private String extractUsername(String token) {
+    public String extractUsername(String token) {
         JwtParser tokenParser = Jwts.parser()
             .verifyWith(getSigningKey())
             .build();
