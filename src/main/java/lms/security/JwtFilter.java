@@ -14,21 +14,23 @@ import jakarta.servlet.ServletException;
 import java.io.IOException;
 // To tell spring to recognize this as bean (@Component = general class recognized by spring)
 import org.springframework.stereotype.Component;
-// To get user info in database by using username
-import lms.service.AccountService;
 // To secured information of the current request (prevents overwriting the filtered authentication)
 import org.springframework.security.core.context.SecurityContextHolder;
+// import daw ako ng userdetails annotation (I don't know what's the purpose of this annotation yet)
+import org.springframework.security.core.userdetails.UserDetailsService;
+// test
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter{
     // If same package I can just declare it, If not I have to import it.
     final private JwtService jwtService;
-    final private AccountService accountService;
+    final private UserDetailsService userDetailsService;
     // constructor injector to use the methods inside the classes
     public JwtFilter (JwtService jwtService,
-                      AccountService accountService){
+                      UserDetailsService userDetailsService){
         this.jwtService=jwtService;
-        this.accountService=accountService;
+        this.userDetailsService=userDetailsService;
     }
     // Polymorphism the method of OncePerRequestFilter annotation
     @Override
@@ -56,14 +58,23 @@ public class JwtFilter extends OncePerRequestFilter{
         // SecurityContextHolder = holds the security info
         // getContext() = container of info
         // getAuthentication() = the object or the user
-        boolean isAuthenticatedUser = SecurityContextHolder.getContext().getAuthentication() == null;
-        if (username == null || !isAuthenticatedUser){
+        boolean noAuthenticationYet = SecurityContextHolder.getContext().getAuthentication() == null;
+        if (username == null || !noAuthenticationYet){
             filterChain.doFilter(request, response);
             return;
         }
+        // It needs to import UserDetails interface to hold variable value of userDetailsService
+        // userDetails hold the value of username
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        if (!jwtService.isTokenValid(token, userDetails)){
+            filterChain.doFilter(request, response);
+            return;
+        }
+
     }
 }
 
 // need natin ma-understand this all annotation kahit comment lang natin
 // delete and repeat
-// straight forward kahit clueless, we will win
+// straight forward kahit clueless pero give sometime to reflect and we will win
+// consistency is the key to this project

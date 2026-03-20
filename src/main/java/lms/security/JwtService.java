@@ -57,7 +57,7 @@ public class JwtService {
         return tokenClaims.getSubject();
     }
     // The main purpose is to validate the token
-    private boolean isTokenValid(String token, UserDetails details) {
+    public boolean isTokenValid(String token, UserDetails details) {
         // 1. extract the username
         String userName = extractUsername(token);
         // true, if the extracted username is equal to user details and not expiration of the token
