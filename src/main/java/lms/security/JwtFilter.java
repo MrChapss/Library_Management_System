@@ -1,6 +1,7 @@
 package lms.security;
 
 // Used to filter once per request only (to avoid multiple or flood request?)
+import org.springframework.security.core.Authentication;
 import org.springframework.web.filter.OncePerRequestFilter;
 // HttpServlet is the way of java handling incoming HTTP requests
 import jakarta.servlet.http.HttpServletRequest;
@@ -59,10 +60,15 @@ public class JwtFilter extends OncePerRequestFilter{
         // getContext() = container of info
         // getAuthentication() = the object or the user
         boolean noAuthenticationYet = SecurityContextHolder.getContext().getAuthentication() == null;
-        if (username == null || !noAuthenticationYet){
+        if (username == null || noAuthenticationYet){
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            if (jwtService.isTokenValid(token, userDetails)){
+                SecurityContextHolder.getContext().setAuthentication();
+            }
+
             filterChain.doFilter(request, response);
-            return;
         }
+        boolean authenticatedUser = SecurityContextHolder.getContext().getAuthentication()
         // It needs to import UserDetails interface to hold variable value of userDetailsService
         // userDetails hold the value of username
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
