@@ -1,7 +1,9 @@
 package lms.security;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 // Used to filter once per request only (to avoid multiple or flood request?)
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.web.filter.OncePerRequestFilter;
 // HttpServlet is the way of java handling incoming HTTP requests
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,7 +31,7 @@ public class JwtFilter extends OncePerRequestFilter{
     final private UserDetailsService userDetailsService;
     // constructor injector to use the methods inside the classes
     public JwtFilter (JwtService jwtService,
-                      UserDetailsService userDetailsService,
+                      UserDetailsService userDetailsService
                       ){
         this.jwtService=jwtService;
         this.userDetailsService=userDetailsService;
@@ -57,13 +59,26 @@ public class JwtFilter extends OncePerRequestFilter{
         String token = authorizationHeader.substring(prefix.length()).trim();
         // extracting username to prevent a user with null username
         String username = jwtService.extractUsername(token);
-
+        // getting user details using the security context holder
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        // return/stop if token is invalid else will be passed
+        if (!jwtService.isTokenValid(token, userDetails)){
+            filterChain.doFilter(request, response);
+            return;
+        }
         // check if user is not empty AND authenticated
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null){
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            userDetails = userDetailsService.loadUserByUsername(username);
             boolean isValidToken = jwtService.isTokenValid(token, userDetails);
             if (isValidToken){
-                SecurityContextHolder.getContext().setAuthentication(Authentication);
+                Authentication test = SecurityContextHolder.getContext().setAuthentication(
+                        UsernamePasswordAuthenticationToken.authenticated(
+                                userDetails.getUsername(),
+                                null,
+                                userDetails.getAuthorities()
+                        )
+                );
+
             }
         }
     }
