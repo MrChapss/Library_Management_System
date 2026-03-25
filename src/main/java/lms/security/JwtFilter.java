@@ -45,6 +45,7 @@ public class JwtFilter extends OncePerRequestFilter{
                                     ) throws ServletException, IOException{
         // Using if conditional to handle null header and not starting in bearer
         // header is a part of a token information
+        // step 1
         String authorizationHeader = request.getHeader("Authorization");
         if (authorizationHeader == null ||
                 // filtering it and pass then stop using the return.
@@ -57,33 +58,41 @@ public class JwtFilter extends OncePerRequestFilter{
         String prefix = "Bearer ";
         // substring job is to extract token using the index starting from "Bearer "
         String token = authorizationHeader.substring(prefix.length()).trim();
-        // extracting username to prevent a user with null username
-        String username = jwtService.extractUsername(token);
-        // getting user details using the security context holder
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        // return/stop if token is invalid else will be passed
-        if (!jwtService.isTokenValid(token, userDetails)){
+
+        try {
+            // extracting username to prevent a user with null username
+            // step 2
+            String username = jwtService.extractUsername(token);
+            // skip if recognized as authenticated
+            // step 3
+            boolean noAuthenticationYet = SecurityContextHolder.getContext().getAuthentication() == null;
+            if (username == null || username.isBlank() || !noAuthenticationYet){
+                filterChain.doFilter(request, response);
+                return;
+            }
+            // getting user details using the security context holder
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+
+            //  the succeed path  using the token validator
+            if (jwtService.isTokenValid(token, userDetails)){
+                // the authentication variable
+                Authentication authenticatedUser = UsernamePasswordAuthenticationToken.authenticated(
+                        userDetails,
+                        null,
+                        userDetails.getAuthorities()
+                );
+                // gets authenticated
+                SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
+            }
+            // catching exception if something is wrong
+        } catch (Exception e) {
             filterChain.doFilter(request, response);
             return;
         }
-        // check if user is not empty AND authenticated
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null){
-            userDetails = userDetailsService.loadUserByUsername(username);
-            boolean isValidToken = jwtService.isTokenValid(token, userDetails);
-            if (isValidToken){
-                Authentication test = SecurityContextHolder.getContext().setAuthentication(
-                        UsernamePasswordAuthenticationToken.authenticated(
-                                userDetails.getUsername(),
-                                null,
-                                userDetails.getAuthorities()
-                        )
-                );
-
-            }
-        }
+        // to proceed to controller
+        filterChain.doFilter(request, response);
     }
 }
-
 // need natin ma-understand this all annotation kahit comment lang natin
 // delete and repeat
 // straight forward kahit clueless pero give sometime to reflect and we will win
