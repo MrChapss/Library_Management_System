@@ -3,7 +3,6 @@ package lms.security;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 // Used to filter once per request only (to avoid multiple or flood request?)
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.web.filter.OncePerRequestFilter;
 // HttpServlet is the way of java handling incoming HTTP requests
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,8 +29,8 @@ public class JwtFilter extends OncePerRequestFilter{
     final private JwtService jwtService;
     final private UserDetailsService userDetailsService;
     // constructor injector to use the methods inside the classes
-    public JwtFilter (JwtService jwtService,
-                      UserDetailsService userDetailsService
+    public JwtFilter(JwtService jwtService,
+                     UserDetailsService userDetailsService
                       ){
         this.jwtService=jwtService;
         this.userDetailsService=userDetailsService;

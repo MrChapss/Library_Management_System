@@ -1,19 +1,38 @@
 package lms.security;
-// What is the purpose of configuration annotation?
-import org.springframework.context.annotation.Configuration;
-// What is the purpose of bean annotation in this class?
+
+// purpose??
 import org.springframework.context.annotation.Bean;
-// The purpose of BCryptPasswordEncoder is to encrypt the password immediately since its already pre-built
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-// What is the purpose of password encoder in this class?
-// Also, what's the difference between BCryptPasswordEncoder to PasswordEncoder?
-import org.springframework.security.crypto.password.PasswordEncoder;
+// purpose??
+import org.springframework.context.annotation.Configuration;
+// purpose??
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+// purpose??
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+// purpose??
+import org.springframework.security.config.http.SessionCreationPolicy;
+// purpose??
+import org.springframework.security.web.SecurityFilterChain;
+// shorcut way for requestMatcher where POST method where only authenticated or allowed,
+// instead adding its method path which is hassle
+// -> self explanation about HttpMethod
 
 @Configuration
 public class SecurityConfig {
-	
 	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
+	public SecurityFilterChain securityFilterChain(HttpSecurity http,
+												   JwtFilter jwtFilter) throws Exception {
+		http
+			.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+			.sessionManagement(session -> session
+					.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+			.csrf(csrf -> csrf
+					.disable())
+			.authorizeHttpRequests(auth -> auth
+					.requestMatchers(org.springframework.http.HttpMethod.POST,
+							"@PostMapping(/LMS/register)",
+							"@PostMapping(/LMS/login)").permitAll()
+					.anyRequest().authenticated()
+			);
+		return http.build();
 	}
 }
