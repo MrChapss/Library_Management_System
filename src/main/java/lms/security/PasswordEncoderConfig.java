@@ -1,18 +1,19 @@
 package lms.security;
-// What is the purpose of configuration annotation?
+// To tell spring that this class produce spring objects to be used in this application
 import org.springframework.context.annotation.Configuration;
-// What is the purpose of bean annotation in this class?
+// Object will be created once and shared in application (managed by spring)
 import org.springframework.context.annotation.Bean;
-// The purpose of BCryptPasswordEncoder is to encrypt the password immediately since its already pre-built
+// Annotation that bcrypt the raw string password
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-// What is the purpose of password encoder in this class?
-// Also, what's the difference between BCryptPasswordEncoder to PasswordEncoder?
+// Interface that hash the password and verify the stored hash in database using raw password
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
+// Creating a reusable class that will implement passwordEncoder to other package and classes
 public class PasswordEncoderConfig {
 	
 	@Bean
+	// this method uses polymorphism which BCryptPasswordEncoder use PasswordEncoder interface
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}

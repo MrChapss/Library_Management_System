@@ -55,7 +55,6 @@ public class AccountController {
 		return ResponseEntity.status(HttpStatus.OK).body(loginResponse);
 
 	}
-
 	@DeleteMapping
 	public String deleteAccount(@RequestBody RegisterAccountDTO user) {
 		return accountService.deleteAccount(user.getUsername());
