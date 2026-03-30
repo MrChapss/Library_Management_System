@@ -1,5 +1,6 @@
 package lms.controller;
 // MUST ADD DOCUMENTATIONS ON HOW THE IMPORTS WORK AND THE CONTROLLER ITSELF
+import org.apache.coyote.Response;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ public class AccountController {
 	public AccountController(AccountService accountService){
 		this.accountService=accountService;
 	}
+
 	@PostMapping("/register")
 	public ResponseEntity<ApiResponse<RegisterResponseDTO>> createAccount(@Valid @RequestBody RegisterAccountDTO register) {
 		RegisterResponseDTO accountData = accountService.createAccount(
@@ -59,8 +61,9 @@ public class AccountController {
 	public String deleteAccount(@RequestBody RegisterAccountDTO user) {
 		return accountService.deleteAccount(user.getUsername());
 	}
+	@GetMapping("/me")
+	public ResponseEntity<R>
 }
 
-// I HAVE TO DELETE THIS AGAIN OR MAYBE DO KEEP AND LEARN FROM IT (IM THINGKING ON IT)
+// I HAVE TO DELETE THIS AGAIN OR MAYBE DO KEEP AND LEARN FROM IT (IM THINGKING ON IT) -> nah, I will move forward
 
-// PAG BAGONG CREATE YUNG ACCOUNT YUNG VALUE NG LAST_LOGIN IS NULL DPAT ANG RETURN VALUE NYA SA POSTMAN AY ?? ( DI KO PA SURE)
