@@ -2,6 +2,7 @@ package lms.controller;
 // MUST ADD DOCUMENTATIONS ON HOW THE IMPORTS WORK AND THE CONTROLLER ITSELF
 import org.apache.coyote.Response;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
@@ -62,7 +63,9 @@ public class AccountController {
 		return accountService.deleteAccount(user.getUsername());
 	}
 	@GetMapping("/me")
-	public ResponseEntity<R>
+	public String testGetEndpoint(Authentication test){
+		return test.getName();
+	}
 }
 
 // I HAVE TO DELETE THIS AGAIN OR MAYBE DO KEEP AND LEARN FROM IT (IM THINGKING ON IT) -> nah, I will move forward

@@ -1,5 +1,6 @@
 package lms.service;
 
+import lms.security.JwtService;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -20,11 +21,14 @@ import java.time.Instant;
 public class AccountService {
 	private final AccountRepository accountRepository;
 	private final PasswordEncoder passwordEncoder;
+	private final JwtService jwtService;
 
 	public AccountService (AccountRepository accountRepository,
-						   PasswordEncoder passwordEncoder){
+						   PasswordEncoder passwordEncoder,
+						   JwtService jwtService){
 		this.accountRepository=accountRepository;
 		this.passwordEncoder=passwordEncoder;
+		this.jwtService=jwtService;
 	}
 	public RegisterResponseDTO createAccount(String username, String password) {
 		if (blankInputs(username, password)){
@@ -63,14 +67,15 @@ public class AccountService {
 
 		if (matchPassword){
 			// get the username and last login timestamp in database
-			LoginResponseDTO test = LoginResponseDTO.builder()
+			LoginResponseDTO loginResponse = LoginResponseDTO.builder()
 				.username(userDB.getUsername())
 				.last_login_at(userDB.getLastLoginAt())
+				.token(jwtService.generateToken(userDB.getUsername()))
 				.build();
 			// save the new login timestamp
 			userDB.setLastLoginAt(Instant.now());
 			accountRepository.save(userDB);
-			return test;
+			return loginResponse;
 		}
 		// if ever blank password input
 		throw new IllegalArgumentException("The username or password is incorrect!");

@@ -51,3 +51,5 @@ public class GlobalExceptionHandler {
     }
 
 }
+// parng kailangan ko gumamit ng interface kasi parehas lang yung status at content ng "handleMininmumCharacters"
+// at handleIllegalArgument

@@ -18,4 +18,5 @@ public class LoginResponseDTO {
     // login timestamp?
     @JsonFormat(pattern = "yyyy-MM-dd, HH:mm:ss", timezone = "UTC")
     private Instant last_login_at;
+    private String token;
 }

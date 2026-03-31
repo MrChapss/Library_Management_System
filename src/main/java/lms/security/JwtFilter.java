@@ -56,7 +56,7 @@ public class JwtFilter extends OncePerRequestFilter{
         // (in short, no need to manually type the index to remove the "Bearer " in the token)
         String prefix = "Bearer ";
         // substring job is to extract token using the index starting from "Bearer "
-        String token = authorizationHeader.substring(prefix.length()).trim();
+        String token = authorizationHeader;
 
         try {
             // extracting username to prevent a user with null username
