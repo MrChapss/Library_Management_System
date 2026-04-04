@@ -54,14 +54,13 @@ public class JwtFilter extends OncePerRequestFilter{
         }
         // prefix variable + length() = amount of index of word in a variable
         // (in short, no need to manually type the index to remove the "Bearer " in the token)
-        String prefix = "Bearer ";
+        //String prefix = "Bearer";
         // substring job is to extract token using the index starting from "Bearer "
-        String token = authorizationHeader;
-
+        //String token = authorizationHeader.substring(prefix.length()).trim();
         try {
             // extracting username to prevent a user with null username
             // step 2
-            String username = jwtService.extractUsername(token);
+            String username = jwtService.extractUsername(authorizationHeader);
             // skip if recognized as authenticated
             // step 3
             boolean noAuthenticationYet = SecurityContextHolder.getContext().getAuthentication() == null;
@@ -73,7 +72,7 @@ public class JwtFilter extends OncePerRequestFilter{
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
             //  the succeed path  using the token validator
-            if (jwtService.isTokenValid(token, userDetails)){
+            if (jwtService.isTokenValid(authorizationHeader, userDetails)){
                 // the authentication variable
                 Authentication authenticatedUser = UsernamePasswordAuthenticationToken.authenticated(
                         userDetails,

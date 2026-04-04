@@ -58,7 +58,8 @@ public class AccountController {
 		return ResponseEntity.status(HttpStatus.OK).body(loginResponse);
 
 	}
-	@DeleteMapping
+	// Use raw json and type the username to delete a user in the database (ERROR "NOT WORKING AT THE MOMENT")
+	@DeleteMapping("/delete")
 	public String deleteAccount(@RequestBody RegisterAccountDTO user) {
 		return accountService.deleteAccount(user.getUsername());
 	}

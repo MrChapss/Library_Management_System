@@ -80,8 +80,9 @@ public class AccountService {
 		// if ever blank password input
 		throw new IllegalArgumentException("The username or password is incorrect!");
 	}
+	// NOT WORKING AT THE MOMENT (I WILL FIX THIS AFTER THE AUTHENTICATION WORK)
 	public String deleteAccount(String username) {
-		accountRepository.existsByUsername(username);
+		accountRepository.deleteByUsername(username);
 		return "The account with the username '" + username + "'"+ " has been deleted";
 	}
 	public boolean isUsernameExist(String username) {
