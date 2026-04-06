@@ -54,13 +54,15 @@ public class JwtFilter extends OncePerRequestFilter{
         }
         // prefix variable + length() = amount of index of word in a variable
         // (in short, no need to manually type the index to remove the "Bearer " in the token)
-        //String prefix = "Bearer";
+        String prefix = "Bearer";
         // substring job is to extract token using the index starting from "Bearer "
-        //String token = authorizationHeader.substring(prefix.length()).trim();
+        String token = authorizationHeader.substring(prefix.length()).trim();
+        System.out.println(token);
         try {
             // extracting username to prevent a user with null username
             // step 2
-            String username = jwtService.extractUsername(authorizationHeader);
+            String username = jwtService.extractUsername(token);
+            System.out.println(username);
             // skip if recognized as authenticated
             // step 3
             boolean noAuthenticationYet = SecurityContextHolder.getContext().getAuthentication() == null;
@@ -69,11 +71,14 @@ public class JwtFilter extends OncePerRequestFilter{
                 return;
             }
             // getting user details using the security context holder
+            System.out.println("Hello sigmas");
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
+            System.out.println("Hello sigmas123");
+            System.out.println(userDetails);
             //  the succeed path  using the token validator
-            if (jwtService.isTokenValid(authorizationHeader, userDetails)){
+            if (jwtService.isTokenValid(token, userDetails)){
                 // the authentication variable
+                System.out.println("test test test");
                 Authentication authenticatedUser = UsernamePasswordAuthenticationToken.authenticated(
                         userDetails,
                         null,
@@ -84,9 +89,11 @@ public class JwtFilter extends OncePerRequestFilter{
             }
             // catching exception if something is wrong
         } catch (Exception e) {
+            System.out.println("sigma nigga123");
             filterChain.doFilter(request, response);
             return;
         }
+        System.out.println("sigma nigga");
         // to proceed to controller
         filterChain.doFilter(request, response);
     }

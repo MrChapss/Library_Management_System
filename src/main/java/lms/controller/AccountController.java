@@ -65,9 +65,12 @@ public class AccountController {
 	}
 	@GetMapping("/me")
 	public String testGetEndpoint(Authentication test){
-		return test.getName();
+		if (test == null){
+			return "Nigga";
+		} else {
+			return test.getName();
+		}
 	}
 }
 
-// I HAVE TO DELETE THIS AGAIN OR MAYBE DO KEEP AND LEARN FROM IT (IM THINGKING ON IT) -> nah, I will move forward
 

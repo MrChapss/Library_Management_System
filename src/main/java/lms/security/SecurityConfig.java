@@ -28,8 +28,7 @@ public class SecurityConfig {
 			.csrf(csrf -> csrf
 					.disable())
 			.authorizeHttpRequests(auth -> auth
-					.requestMatchers(
-							"/LMS/me",
+					.requestMatchers(HttpMethod.POST,
 							"/LMS/register",
 							"/LMS/login").permitAll()
 					.anyRequest().authenticated()
