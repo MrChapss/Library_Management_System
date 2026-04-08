@@ -62,7 +62,7 @@ public class JwtFilter extends OncePerRequestFilter{
             // extracting username to prevent a user with null username
             // step 2
             String username = jwtService.extractUsername(token);
-            System.out.println(username);
+            System.out.println("LINE 65: " + username);
             // skip if recognized as authenticated
             // step 3
             boolean noAuthenticationYet = SecurityContextHolder.getContext().getAuthentication() == null;
@@ -70,15 +70,14 @@ public class JwtFilter extends OncePerRequestFilter{
                 filterChain.doFilter(request, response);
                 return;
             }
-            // getting user details using the security context holder
+            // getting user details using the security context holder (ITO TLGA YUNG ERROR)
             System.out.println("Hello sigmas");
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            System.out.println("Hello sigmas123");
-            System.out.println(userDetails);
+            System.out.println(username);
             //  the succeed path  using the token validator
             if (jwtService.isTokenValid(token, userDetails)){
                 // the authentication variable
-                System.out.println("test test test");
+                System.out.println("isTokenValid method is working");
                 Authentication authenticatedUser = UsernamePasswordAuthenticationToken.authenticated(
                         userDetails,
                         null,
@@ -89,16 +88,16 @@ public class JwtFilter extends OncePerRequestFilter{
             }
             // catching exception if something is wrong
         } catch (Exception e) {
-            System.out.println("sigma nigga123");
+            System.out.println("ERROR: JwtFilter class!");
             filterChain.doFilter(request, response);
             return;
         }
-        System.out.println("sigma nigga");
+        System.out.println("The JwtFilter class is working!");
         // to proceed to controller
         filterChain.doFilter(request, response);
     }
 }
 // need natin ma-understand this all annotation kahit comment lang natin
 // delete and repeat
-// straight forward kahit clueless pero give sometime to reflect and we will win
+// straight forward kahit clueless pero give sometime to reflect, and we will win
 // consistency is the key to this project

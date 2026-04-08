@@ -1,8 +1,14 @@
 package lms.service;
 
 import lms.security.JwtService;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
+// the userDetails is an interface representing the user (its like abstracting the user model class)
+import org.springframework.security.core.userdetails.UserDetails;
+// the userDetailsService for retrieving some details
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import lms.model.User;
 import lms.dto.RegisterResponseDTO;
@@ -18,7 +24,7 @@ import jakarta.transaction.Transactional;
 import java.time.Instant;
 
 @Service
-public class AccountService {
+public class AccountService implements UserDetailsService{
 	private final AccountRepository accountRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final JwtService jwtService;
@@ -30,13 +36,23 @@ public class AccountService {
 		this.passwordEncoder=passwordEncoder;
 		this.jwtService=jwtService;
 	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		User user = accountRepository.findPasswordByUsername(username);
+		if (user == null) {
+			throw new UsernameNotFoundException("User not found: " + username);
+		}
+		return user;
+	}
+
 	public RegisterResponseDTO createAccount(String username, String password) {
 		if (blankInputs(username, password)){
 			throw new IllegalArgumentException("The username or password cannot be empty!");
 		} if (isUsernameExist(username)){
 			throw new UsernameAlreadyExistsException("The username already exists");
 		}
-		if (requiredMinimumCharactersUN(username)){
+		if (requiredMinimumCharactersUsername(username)){
 			throw new RequiredMinimumCharacters("The username must be at least 3 characters long");
 		}
 		if (requiredMinimumCharactersPassword(password)) {
@@ -88,7 +104,7 @@ public class AccountService {
 	public boolean isUsernameExist(String username) {
 		return accountRepository.existsByUsername(username);
 	}
-	public boolean requiredMinimumCharactersUN(String username){return username.length() < 5;}
+	public boolean requiredMinimumCharactersUsername(String username){return username.length() < 5;}
 	public boolean requiredMinimumCharactersPassword(String password){return password.length() < 8;}
 	public boolean blankInputs(String username, String password) {
 		return username == null || username.isBlank() ||

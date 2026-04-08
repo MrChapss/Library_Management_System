@@ -1,6 +1,5 @@
 package lms.controller;
 // MUST ADD DOCUMENTATIONS ON HOW THE IMPORTS WORK AND THE CONTROLLER ITSELF
-import org.apache.coyote.Response;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
 
@@ -58,7 +57,7 @@ public class AccountController {
 		return ResponseEntity.status(HttpStatus.OK).body(loginResponse);
 
 	}
-	// Use raw json and type the username to delete a user in the database (ERROR "NOT WORKING AT THE MOMENT")
+	// Use raw JSON and type the username to delete a user in the database (ERROR "NOT WORKING AT THE MOMENT")
 	@DeleteMapping("/delete")
 	public String deleteAccount(@RequestBody RegisterAccountDTO user) {
 		return accountService.deleteAccount(user.getUsername());
