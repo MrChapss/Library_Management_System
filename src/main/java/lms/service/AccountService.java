@@ -3,6 +3,9 @@ package lms.service;
 import lms.security.JwtService;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import lms.model.User;
 import lms.dto.RegisterResponseDTO;
@@ -18,7 +21,7 @@ import jakarta.transaction.Transactional;
 import java.time.Instant;
 
 @Service
-public class AccountService {
+public class AccountService implements UserDetailsService {
 	private final AccountRepository accountRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final JwtService jwtService;
@@ -93,5 +96,14 @@ public class AccountService {
 	public boolean blankInputs(String username, String password) {
 		return username == null || username.isBlank() ||
 				password == null || password.isBlank();
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		User user = accountRepository.findPasswordByUsername(username);
+		if (user == null) {
+			throw new UsernameNotFoundException("User not found: " + username);
+		}
+		return user;
 	}
 }

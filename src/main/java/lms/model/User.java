@@ -1,6 +1,8 @@
 package lms.model;
 
 import java.time.Instant;
+import java.util.Collection;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -20,6 +22,10 @@ import lombok.NoArgsConstructor;
 // @AllArgsConstructor - For user to create a book immediately if all fields are complete
 import lombok.AllArgsConstructor;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -28,7 +34,7 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 // this class act as a table structure in database
-public class User {
+public class User implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -42,4 +48,9 @@ public class User {
 	private Instant createdAt;
 	@Column(nullable = false)
 	private Instant lastLoginAt;
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return List.of(new SimpleGrantedAuthority(isAdmin ? "ROLE_ADMIN" : "ROLE_USER"));
+	}
 }
