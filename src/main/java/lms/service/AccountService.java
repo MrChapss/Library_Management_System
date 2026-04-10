@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.userdetails.UserDetails;
 // the userDetailsService for retrieving some details
 import org.springframework.security.core.userdetails.UserDetailsService;
+// throws exception if username not found
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import lms.model.User;
@@ -38,12 +39,13 @@ public class AccountService implements UserDetailsService{
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = accountRepository.findPasswordByUsername(username);
-		if (user == null) {
-			throw new UsernameNotFoundException("User not found: " + username);
+	public UserDetails loadUserByUsername(String username)
+			throws UsernameNotFoundException{
+		if (username == null){
+			throw new UsernameNotFoundException("The username does not exist!");
+		} else {
+			return accountRepository.findUserByUsername(username);
 		}
-		return user;
 	}
 
 	public RegisterResponseDTO createAccount(String username, String password) {

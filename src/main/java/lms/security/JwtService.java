@@ -71,6 +71,6 @@ public class JwtService {
        // Claims "tokenInfo" hold all the data from the token (I get the actual data using the .getPayLoad() method)
        Claims tokenInfo = tokenDetails.parseSignedClaims(token).getPayload();
        // return the true if not expired, return false if expired
-       return (new Date(System.currentTimeMillis()).before(tokenInfo.getExpiration()));
+       return new Date(System.currentTimeMillis()).before(tokenInfo.getExpiration());
     }
 }
