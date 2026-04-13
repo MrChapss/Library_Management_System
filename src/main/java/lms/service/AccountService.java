@@ -1,19 +1,22 @@
 package lms.service;
 
+import lms.exception.ExpiredToken;
 import lms.security.JwtService;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 // the userDetails is an interface representing the user (its like abstracting the user model class)
-import org.springframework.security.core.userdetails.UserDetails;
 // the userDetailsService for retrieving some details
 import org.springframework.security.core.userdetails.UserDetailsService;
 // throws exception if username not found
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.Authentication;
 
 import lms.model.User;
 import lms.dto.RegisterResponseDTO;
 import lms.dto.LoginResponseDTO;
+import lms.dto.TokenStatus;
 import lms.repository.AccountRepository;
 
 import lms.exception.RequiredMinimumCharacters;
@@ -37,7 +40,8 @@ public class AccountService implements UserDetailsService{
 		this.passwordEncoder=passwordEncoder;
 		this.jwtService=jwtService;
 	}
-
+	// Get the username in account repository class (for JwtFilter to work)
+	// hindi ako sure pano na accept ng user model yung userDetails interface gamit ng GrantedAuthority
 	@Override
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException{
@@ -47,7 +51,6 @@ public class AccountService implements UserDetailsService{
 			return accountRepository.findUserByUsername(username);
 		}
 	}
-
 	public RegisterResponseDTO createAccount(String username, String password) {
 		if (blankInputs(username, password)){
 			throw new IllegalArgumentException("The username or password cannot be empty!");
@@ -77,6 +80,7 @@ public class AccountService implements UserDetailsService{
 	}
 	@Transactional
 	public LoginResponseDTO loginAccount(String username, String password){
+		// check if the username exist in database
 		if (!isUsernameExist(username)){
 			throw new IllegalArgumentException("The username or password is incorrect!");
 		}
@@ -111,5 +115,17 @@ public class AccountService implements UserDetailsService{
 	public boolean blankInputs(String username, String password) {
 		return username == null || username.isBlank() ||
 				password == null || password.isBlank();
+	}
+
+	public TokenStatus tokenStatus(Authentication authentication){
+		if (authentication == null){
+			throw new ExpiredToken("Token is expired");
+		}
+		TokenStatus test = TokenStatus.builder()
+				.time_now(Instant.now())
+				.status(HttpStatus.BAD_REQUEST.value())
+				.message("Sigma nigga")
+				.build();
+		return test;
 	}
 }

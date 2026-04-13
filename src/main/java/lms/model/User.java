@@ -53,15 +53,6 @@ public class User implements UserDetails{
 	@Column(nullable = false)
 	private Instant lastLoginAt;
 
-	// What's the purpose of this?
-//	@Override
-//	public String getUsername(){
-//		return username;
-//	}
-//	@Override
-//	public String getPassword(){
-//		return password;
-//	}
 	// Giving context to spring boot what kind of roles have in the database
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities(){
@@ -77,6 +68,6 @@ public class User implements UserDetails{
 		}
 		return List.of(authority);
 	}
-
+	// Add @Override account status methods (later)
 
 }

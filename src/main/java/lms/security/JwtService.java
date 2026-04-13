@@ -63,7 +63,7 @@ public class JwtService {
         return (details.getUsername().equals(userName) && isTokenExpired(token));
     }
     // This is a helper method for "isTokenValid" for preventing expired token
-    private boolean isTokenExpired(String token){
+    public boolean isTokenExpired(String token){
         // read the token
        JwtParser tokenDetails = Jwts.parser()
                .verifyWith(getSigningKey())

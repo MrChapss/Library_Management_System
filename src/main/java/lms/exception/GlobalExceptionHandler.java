@@ -49,7 +49,16 @@ public class GlobalExceptionHandler {
                 .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
-
+    @ExceptionHandler(ExpiredToken.class)
+    public ResponseEntity<ApiResponse<Void>> ExpiredToken(
+            ExpiredToken ex) {
+        ApiResponse<Void> response = ApiResponse.<Void>builder()
+                .timestamp(Instant.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .error(ex.getMessage())
+                .build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
 }
 // parng kailangan ko gumamit ng interface kasi parehas lang yung status at content ng "handleMininmumCharacters"
 // at handleIllegalArgument

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 
 import jakarta.validation.Valid;
 
+import lms.dto.TokenStatus;
 import lms.api.ApiResponse;
 import lms.dto.RegisterAccountDTO;
 import lms.dto.RegisterResponseDTO;
@@ -62,14 +63,33 @@ public class AccountController {
 	public String deleteAccount(@RequestBody RegisterAccountDTO user) {
 		return accountService.deleteAccount(user.getUsername());
 	}
+
 	@GetMapping("/me")
-	public String testGetEndpoint(Authentication test){
-		if (test == null){
-			return "Nigga";
+	public ResponseEntity<ApiResponse<TokenStatus>> tokenChecking(Authentication authentication){
+		if (authentication == null){
+			TokenStatus tokenStatus = accountService.tokenStatus(authentication);
+			return null;
+
 		} else {
-			return test.getName();
+			ApiResponse<TokenStatus> tokenResponse = ApiResponse.<TokenStatus>builder()
+					.timestamp(Instant.now())
+					.status(HttpStatus.OK.value())
+					.message("Token is valid")
+					.build();
+			return ResponseEntity.status(HttpStatus.OK).body(tokenResponse);
 		}
 	}
+
+//	@GetMapping("/me")
+//	public String testGetEndpoint(Authentication test){
+//		if (test == null){
+//			return "Error authentication";
+//		} else {
+//			return test.getName();
+//		}
+//	}
+
+
 }
 
 

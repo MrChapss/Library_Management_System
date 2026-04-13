@@ -1,5 +1,6 @@
 package lms.security;
 
+import lms.exception.ExpiredToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 // Used to filter once per request only (to avoid multiple or flood request?)
@@ -18,9 +19,10 @@ import java.io.IOException;
 import org.springframework.stereotype.Component;
 // To secured information of the current request (prevents overwriting the filtered authentication)
 import org.springframework.security.core.context.SecurityContextHolder;
-// import daw ako ng userdetails annotation (I don't know what's the purpose of this annotation yet)
+// To use the method in the interface of UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService;
-// test
+// Used as representation of the classes
+// so when using the UserDetails interface you can access info in (User, AccountService, etc. class)
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Component
@@ -68,9 +70,9 @@ public class JwtFilter extends OncePerRequestFilter{
                 filterChain.doFilter(request, response);
                 return;
             }
+            // Get the username from the database (account repository class)
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            System.out.println(username);
-            //  the succeed path  using the token validator
+            //  Authenticating the user if their token is valid
             if (jwtService.isTokenValid(token, userDetails)){
                 // the authentication variable
                 Authentication authenticatedUser = UsernamePasswordAuthenticationToken.authenticated(
@@ -78,7 +80,7 @@ public class JwtFilter extends OncePerRequestFilter{
                         null,
                         userDetails.getAuthorities()
                 );
-                // gets authenticated
+                // Gets authenticated
                 SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
             }
             // catching exception if something is wrong
@@ -87,12 +89,13 @@ public class JwtFilter extends OncePerRequestFilter{
             filterChain.doFilter(request, response);
             return;
         }
-        System.out.println("The JwtFilter class is working!");
-        // to proceed to controller
+        // Proceed to controller
         filterChain.doFilter(request, response);
     }
 }
 // need natin ma-understand this all annotation kahit comment lang natin
-// delete and repeat
+// forward and continue
 // straight forward kahit clueless pero give sometime to reflect, and we will win
 // consistency is the key to this project
+
+// gawa ako ng response if expired na yung token para alam ni user na kailangan na nya ulit mag log in.
