@@ -116,16 +116,18 @@ public class AccountService implements UserDetailsService{
 		return username == null || username.isBlank() ||
 				password == null || password.isBlank();
 	}
-
+	// Response for GET endpoint if token still valid or not
 	public TokenStatus tokenStatus(Authentication authentication){
 		if (authentication == null){
-			throw new ExpiredToken("Token is expired");
+			// this is the value of error variable in GlobalExceptionHandler
+			throw new ExpiredToken("Unauthorized");
 		}
-		TokenStatus test = TokenStatus.builder()
-				.time_now(Instant.now())
-				.status(HttpStatus.BAD_REQUEST.value())
-				.message("Sigma nigga")
+		// response if authentication is valid
+		return  TokenStatus.builder()
+				.timestamp(Instant.now())
+				.status(HttpStatus.OK.value())
+				.message("Token is working!")
+				.error(null)
 				.build();
-		return test;
 	}
 }

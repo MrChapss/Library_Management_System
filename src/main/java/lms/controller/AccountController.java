@@ -15,6 +15,7 @@ import lms.dto.RegisterResponseDTO;
 import lms.dto.LoginAccountDTO;
 import lms.dto.LoginResponseDTO;
 import lms.service.AccountService;
+import org.springframework.web.client.RestClient;
 
 import java.time.Instant;
 
@@ -22,9 +23,11 @@ import java.time.Instant;
 @RequestMapping("/LMS")
 public class AccountController {
 	private final AccountService accountService;
+	private final RestClient.Builder builder;
 
-	public AccountController(AccountService accountService){
+	public AccountController(AccountService accountService, RestClient.Builder builder){
 		this.accountService=accountService;
+		this.builder = builder;
 	}
 
 	@PostMapping("/register")
@@ -65,19 +68,8 @@ public class AccountController {
 	}
 
 	@GetMapping("/me")
-	public ResponseEntity<ApiResponse<TokenStatus>> tokenChecking(Authentication authentication){
-		if (authentication == null){
-			TokenStatus tokenStatus = accountService.tokenStatus(authentication);
-			return null;
-
-		} else {
-			ApiResponse<TokenStatus> tokenResponse = ApiResponse.<TokenStatus>builder()
-					.timestamp(Instant.now())
-					.status(HttpStatus.OK.value())
-					.message("Token is valid")
-					.build();
-			return ResponseEntity.status(HttpStatus.OK).body(tokenResponse);
-		}
+	public TokenStatus tokenChecking(Authentication authentication){
+		return accountService.tokenStatus(authentication);
 	}
 
 //	@GetMapping("/me")

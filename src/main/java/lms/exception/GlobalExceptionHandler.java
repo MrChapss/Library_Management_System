@@ -56,6 +56,7 @@ public class GlobalExceptionHandler {
                 .timestamp(Instant.now())
                 .status(HttpStatus.BAD_REQUEST.value())
                 .error(ex.getMessage())
+                .message("JWT token has expired")
                 .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }

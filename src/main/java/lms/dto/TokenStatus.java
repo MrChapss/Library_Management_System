@@ -17,8 +17,9 @@ import lombok.NoArgsConstructor;
 
 public class TokenStatus {
     @JsonFormat(pattern = "yyyy-MM-dd, HH:mm:ss", timezone = "UTC")
-    private Instant time_now;
+    private Instant timestamp;
     private int status;
-    private String error;
     private String message;
+    private String error;
+
 }

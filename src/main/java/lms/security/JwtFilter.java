@@ -1,6 +1,6 @@
 package lms.security;
 
-import lms.exception.ExpiredToken;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 // Used to filter once per request only (to avoid multiple or flood request?)
@@ -84,8 +84,10 @@ public class JwtFilter extends OncePerRequestFilter{
                 SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
             }
             // catching exception if something is wrong
-        } catch (Exception e) {
-            e.getCause();
+
+        } catch (ExpiredJwtException expiredJwtException) {
+            System.out.println("error");
+            expiredJwtException.printStackTrace();
             filterChain.doFilter(request, response);
             return;
         }
