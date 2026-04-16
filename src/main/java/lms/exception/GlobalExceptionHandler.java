@@ -60,6 +60,17 @@ public class GlobalExceptionHandler {
                 .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
+    @ExceptionHandler(NoTokenEntry.class)
+    public ResponseEntity<ApiResponse<Void>> NoToken(
+            NoTokenEntry ex) {
+        ApiResponse<Void> response = ApiResponse.<Void>builder()
+                .timestamp(Instant.now())
+                .status(HttpStatus.UNAUTHORIZED.value())
+                .error(ex.getMessage())
+                .message("No token entry")
+                .build();
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+    }
 }
 // parng kailangan ko gumamit ng interface kasi parehas lang yung status at content ng "handleMininmumCharacters"
 // at handleIllegalArgument

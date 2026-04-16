@@ -1,6 +1,7 @@
 package lms.service;
 
-import lms.exception.ExpiredToken;
+import lms.exception.*;
+import lms.exception.IllegalArgumentException;
 import lms.security.JwtService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,10 +19,6 @@ import lms.dto.RegisterResponseDTO;
 import lms.dto.LoginResponseDTO;
 import lms.dto.TokenStatus;
 import lms.repository.AccountRepository;
-
-import lms.exception.RequiredMinimumCharacters;
-import lms.exception.UsernameAlreadyExistsException;
-import lms.exception.IllegalArgumentException;
 
 import jakarta.transaction.Transactional;
 
@@ -119,9 +116,9 @@ public class AccountService implements UserDetailsService{
 	// Response for GET endpoint if token still valid or not
 	public TokenStatus tokenStatus(Authentication authentication){
 		if (authentication == null){
-			// this is the value of error variable in GlobalExceptionHandler
-			throw new ExpiredToken("Unauthorized");
-		}
+		// parang magulo yung execute ko dto kapag no token entry dapat sa no authentication tlga to
+		throw new NoTokenEntry("Unauthorized");
+	}
 		// response if authentication is valid
 		return  TokenStatus.builder()
 				.timestamp(Instant.now())
@@ -130,4 +127,7 @@ public class AccountService implements UserDetailsService{
 				.error(null)
 				.build();
 	}
+//	private boolean noToken(LoginResponseDTO token){
+//		return (token.getToken() == null || token.getToken().isEmpty());
+//	}
 }

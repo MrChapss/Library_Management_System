@@ -1,6 +1,7 @@
 package lms.security;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import lms.exception.NoTokenEntry;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 // Used to filter once per request only (to avoid multiple or flood request?)
@@ -37,6 +38,13 @@ public class JwtFilter extends OncePerRequestFilter{
         this.jwtService=jwtService;
         this.userDetailsService=userDetailsService;
     }
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request){
+        String path = request.getServletPath();
+        return path.equals("/LMS/login") || path.equals("/LMS/register");
+    }
+
+
     // Polymorphism the method of OncePerRequestFilter annotation
     @Override
     // doFilterInternal(...) where filter logic resides (similar to main method)
@@ -84,11 +92,10 @@ public class JwtFilter extends OncePerRequestFilter{
                 SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
             }
             // catching exception if something is wrong
-
         } catch (ExpiredJwtException expiredJwtException) {
-            System.out.println("error");
-            expiredJwtException.printStackTrace();
-            filterChain.doFilter(request, response);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("application/json");
+            response.getWriter().write("Token has expired. Please log in again.");
             return;
         }
         // Proceed to controller

@@ -66,22 +66,12 @@ public class AccountController {
 	public String deleteAccount(@RequestBody RegisterAccountDTO user) {
 		return accountService.deleteAccount(user.getUsername());
 	}
-
+	// Response to GET endpoint whether the token is valid or not
+	// wala ako response kapag random words or numbers
 	@GetMapping("/me")
 	public TokenStatus tokenChecking(Authentication authentication){
 		return accountService.tokenStatus(authentication);
 	}
-
-//	@GetMapping("/me")
-//	public String testGetEndpoint(Authentication test){
-//		if (test == null){
-//			return "Error authentication";
-//		} else {
-//			return test.getName();
-//		}
-//	}
-
-
 }
 
 

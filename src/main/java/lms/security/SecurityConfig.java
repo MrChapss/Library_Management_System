@@ -29,9 +29,9 @@ public class SecurityConfig {
 					.disable())
 			.authorizeHttpRequests(auth -> auth
 					.requestMatchers(
-							"/LMS/me",
 							"/LMS/register",
-							"/LMS/login").permitAll()
+							"/LMS/login",
+							"/LMS/me").permitAll()
 					.anyRequest().authenticated()
 			);
 		return http.build();

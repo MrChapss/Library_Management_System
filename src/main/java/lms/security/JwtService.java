@@ -60,10 +60,10 @@ public class JwtService {
         // 1. extract the username
         String userName = extractUsername(token);
         // true, if the extracted username is equal to user details and not expiration of the token
-        return (details.getUsername().equals(userName) && isTokenExpired(token));
+        return (details.getUsername().equals(userName) && isTokenNotExpired(token));
     }
     // This is a helper method for "isTokenValid" for preventing expired token
-    public boolean isTokenExpired(String token){
+    public boolean isTokenNotExpired(String token){
         // read the token
        JwtParser tokenDetails = Jwts.parser()
                .verifyWith(getSigningKey())
