@@ -119,7 +119,7 @@ public class AccountService implements UserDetailsService{
 		// parang magulo yung execute ko dto kapag no token entry dapat sa no authentication tlga to
 		throw new NoTokenEntry("Unauthorized");
 	}
-		// response if authentication is valid
+		// 200 (OK) response if authentication is valid
 		return  TokenStatus.builder()
 				.timestamp(Instant.now())
 				.status(HttpStatus.OK.value())

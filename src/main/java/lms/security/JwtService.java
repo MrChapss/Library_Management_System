@@ -1,5 +1,7 @@
 package lms.security;
 
+// Used when jwt token is inputted randomly by user
+import io.jsonwebtoken.MalformedJwtException;
 // For springboot to recognize is bean type of service
 import org.springframework.stereotype.Service;
 // Annotation used for using the value inside the application.properties file
@@ -20,6 +22,7 @@ import java.util.Date;
 import io.jsonwebtoken.Claims;
 // Used for representing user object data
 import org.springframework.security.core.userdetails.UserDetails;
+
 @Service
 public class JwtService {
     /* The syntax for the @Value annotation is that the declaration of the variable
@@ -49,11 +52,15 @@ public class JwtService {
     // The main purpose of this method is to identify who made a request in the server
     // Method for reads username out of the token
     public String extractUsername(String token) {
-        JwtParser tokenParser = Jwts.parser()
-            .verifyWith(getSigningKey())
-            .build();
-        Claims tokenClaims = tokenParser.parseSignedClaims(token).getPayload();
-        return tokenClaims.getSubject();
+        try {
+            JwtParser tokenParser = Jwts.parser()
+                    .verifyWith(getSigningKey())
+                    .build();
+            Claims tokenClaims = tokenParser.parseSignedClaims(token).getPayload();
+            return tokenClaims.getSubject();
+        } catch(MalformedJwtException malformedJwtException) {
+            throw new MalformedJwtException(token);
+        }
     }
     // The main purpose is to validate the token
     public boolean isTokenValid(String token, UserDetails details) {

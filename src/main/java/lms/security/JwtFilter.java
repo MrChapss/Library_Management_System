@@ -1,8 +1,12 @@
 package lms.security;
 
+// ....
+// Used for throwing exception when expired jwt token
 import io.jsonwebtoken.ExpiredJwtException;
-import lms.exception.NoTokenEntry;
+// what used for?
+import io.jsonwebtoken.MalformedJwtException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+// what used for?
 import org.springframework.security.core.Authentication;
 // Used to filter once per request only (to avoid multiple or flood request?)
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -96,6 +100,11 @@ public class JwtFilter extends OncePerRequestFilter{
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType("application/json");
             response.getWriter().write("Token has expired. Please log in again.");
+            return;
+        } catch (MalformedJwtException malformedJwtException){
+            response.setStatus(HttpServletResponse.SC_CONFLICT);
+            response.setContentType("application/json");
+            response.getWriter().write("Token entry is malformed");
             return;
         }
         // Proceed to controller
